@@ -3,1342 +3,2399 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Workout Pro</title>
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800;900&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>WORKOUT PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;600;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 :root {
-  --bg:#0a0a0f; --bg2:#12121a; --card:#1a1a28; --card-h:#222236;
-  --border:#2a2a40; --fg:#e8e8f0; --fgd:#8888a0;
-  --accent:#ff6b35; --accent2:#ff9f1c; --glow:rgba(255,107,53,.25);
-  --danger:#ef4444; --success:#22c55e;
-  --d1:#ff6b35; --d2:#ff9f1c; --d3:#22c55e; --d4:#3b82f6;
-  --d5:#a855f7; --d6:#ec4899; --d7:#14b8a6;
+  --bg: #08080e;
+  --bg2: #0e0e18;
+  --bg3: #141422;
+  --glass: rgba(255,255,255,0.03);
+  --glass2: rgba(255,255,255,0.06);
+  --glass3: rgba(255,255,255,0.09);
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.1);
+  --fg: #f0f0f5;
+  --fg2: #c0c0d0;
+  --fg3: #707088;
+  --accent: #e8a045;
+  --accent2: #f0c060;
+  --accent3: #d08030;
+  --glow: rgba(232,160,69,0.2);
+  --glow2: rgba(232,160,69,0.08);
+  --red: #f05050;
+  --green: #40d880;
+  --blue: #50a0f0;
+  --purple: #a070f0;
+  --d1: #e8a045;
+  --d2: #f0c060;
+  --d3: #40d880;
+  --d4: #50a0f0;
+  --d5: #a070f0;
+  --d6: #f06090;
+  --d7: #40c8c0;
+  --radius: 16px;
+  --radius2: 12px;
+  --radius3: 10px;
 }
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;overflow-x:hidden}
 
-/* พื้นหลัง */
-.bg-fx{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.bg-fx .b{position:absolute;border-radius:50%;filter:blur(120px);opacity:.12;animation:bf 14s ease-in-out infinite alternate}
-.bg-fx .b:nth-child(1){width:500px;height:500px;background:var(--accent);top:-120px;left:-80px}
-.bg-fx .b:nth-child(2){width:400px;height:400px;background:var(--accent2);bottom:-80px;right:-80px;animation-delay:-5s}
-.bg-fx .b:nth-child(3){width:300px;height:300px;background:#a855f7;top:40%;left:45%;animation-delay:-9s}
-@keyframes bf{0%{transform:translate(0,0) scale(1)}100%{transform:translate(40px,-30px) scale(1.15)}}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-.app{position:relative;z-index:1;max-width:600px;margin:0 auto;padding:16px 16px 130px}
-header{text-align:center;padding:24px 0 8px}
-header h1{font-family:'Kanit';font-weight:900;font-size:1.9rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-header p{color:var(--fgd);font-size:.82rem;margin-top:2px}
+::-webkit-scrollbar {
+  width: 4px;
+}
 
-/* แท็บ */
-.tabs{display:flex;gap:3px;background:var(--bg2);border-radius:14px;padding:3px;margin:16px 0;border:1px solid var(--border)}
-.tbtn{flex:1;padding:10px 4px;border:none;background:0;color:var(--fgd);font-family:'Kanit';font-weight:600;font-size:.82rem;border-radius:11px;cursor:pointer;transition:.3s;display:flex;align-items:center;justify-content:center;gap:6px}
-.tbtn.on{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 18px var(--glow)}
-.tbtn:not(.on):hover{color:var(--fg);background:var(--card)}
-.tcon{display:none}.tcon.on{display:block}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
 
-/* เลือกวัน */
-.day-sel{display:flex;gap:5px;margin-bottom:14px;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}
-.day-sel::-webkit-scrollbar{display:none}
-.dchip{flex-shrink:0;padding:7px 14px;border-radius:9px;border:2px solid var(--border);background:var(--card);color:var(--fgd);font-family:'Kanit';font-weight:600;font-size:.82rem;cursor:pointer;transition:.25s;display:flex;align-items:center;gap:5px}
-.dchip .cnt{background:rgba(255,255,255,.1);padding:1px 6px;border-radius:5px;font-size:.72rem}
-.dchip.on{color:#fff;border-color:transparent;box-shadow:0 4px 14px rgba(0,0,0,.3)}
-.dchip[data-d="1"].on{background:var(--d1)}.dchip[data-d="2"].on{background:var(--d2)}.dchip[data-d="3"].on{background:var(--d3)}
-.dchip[data-d="4"].on{background:var(--d4)}.dchip[data-d="5"].on{background:var(--d5)}.dchip[data-d="6"].on{background:var(--d6)}.dchip[data-d="7"].on{background:var(--d7)}
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+}
 
-/* ปุ่มเพิ่ม */
-.addbtn{width:100%;padding:13px;border:2px dashed var(--border);border-radius:13px;background:0;color:var(--fgd);font-family:'Kanit';font-weight:600;font-size:.9rem;cursor:pointer;transition:.3s;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px}
-.addbtn:hover{border-color:var(--accent);color:var(--accent);background:rgba(255,107,53,.04)}
+body {
+  font-family: 'Space Grotesk', 'Kanit', sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
 
-/* การ์ด */
-.elist{display:flex;flex-direction:column;gap:9px}
-.ecard{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:14px;transition:.3s;animation:si .3s ease}
-.ecard:hover{border-color:rgba(255,107,53,.3);background:var(--card-h)}
-@keyframes si{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.etop{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.ename{font-family:'Kanit';font-weight:800;font-size:1rem;color:var(--fg);flex:1;cursor:pointer;padding:3px 7px;border-radius:7px;border:1px solid transparent;transition:.2s;outline:none;min-width:0;word-break:break-word}
-.ename:hover{background:rgba(255,255,255,.04)}.ename:focus{background:var(--bg2);border-color:var(--accent);cursor:text}
-.sbtn{width:32px;height:32px;border-radius:9px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:.2s;flex-shrink:0;margin-left:5px}
-.delb{background:rgba(239,68,68,.1);color:var(--danger)}.delb:hover{background:var(--danger);color:#fff;transform:scale(1.1)}
-.dupb{background:rgba(34,197,94,.1);color:var(--success)}.dupb:hover{background:var(--success);color:#fff;transform:scale(1.1)}
-.estats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.sbox{background:var(--bg2);border-radius:9px;padding:9px;text-align:center;border:1px solid transparent;transition:.2s}
-.sbox:hover{border-color:var(--border)}
-.slbl{font-size:.6rem;color:var(--fgd);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}
-.sval{font-family:'Kanit';font-weight:800;font-size:1.1rem;color:var(--fg);cursor:pointer;padding:2px 3px;border-radius:5px;border:1px solid transparent;outline:none;transition:.2s;display:inline-block}
-.sval:hover{background:rgba(255,255,255,.04)}.sval:focus{background:var(--bg);border-color:var(--accent);cursor:text}
-.sunit{font-size:.65rem;color:var(--fgd);font-weight:400}
+.bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
 
-/* สรุป */
-.sbar{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px}
-.sitem{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:11px 8px;text-align:center}
-.snum{font-family:'Kanit';font-weight:900;font-size:1.25rem;color:var(--accent)}
-.slbl2{font-size:.6rem;color:var(--fgd);text-transform:uppercase;letter-spacing:.4px;margin-top:1px}
+.bg .orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.08;
+}
 
-/* วันที่ในประวัติ */
-.dhdr{font-family:'Kanit';font-weight:600;font-size:.82rem;color:var(--fgd);padding:7px 3px 5px;display:flex;align-items:center;gap:7px}
-.dhdr::after{content:'';flex:1;height:1px;background:var(--border)}
-.ddel{background:none;border:none;color:var(--fgd);cursor:pointer;font-size:.72rem;padding:3px 5px;border-radius:5px;transition:.2s}
-.ddel:hover{color:var(--danger);background:rgba(239,68,68,.1)}
-.drow{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.dtit{font-family:'Kanit';font-weight:800;font-size:1.05rem}
-.clrbtn{padding:5px 10px;border-radius:7px;border:1px solid var(--border);background:0;color:var(--fgd);font-family:'Sarabun';font-size:.72rem;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:4px}
-.clrbtn:hover{border-color:var(--danger);color:var(--danger);background:rgba(239,68,68,.04)}
-.empty{text-align:center;padding:45px 20px;color:var(--fgd)}
-.empty i{font-size:2.8rem;margin-bottom:10px;opacity:.25;display:block}
-.empty p{font-size:.88rem}
+.bg .orb:nth-child(1) {
+  width: 600px;
+  height: 600px;
+  background: var(--accent);
+  top: -200px;
+  left: -150px;
+  animation: orbFloat 20s ease-in-out infinite alternate;
+}
 
-/* ===== โมดัล ===== */
-.mo{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);z-index:100;display:none;align-items:flex-end;justify-content:center}
-.mo.show{display:flex}
-.md{background:var(--bg2);border-radius:22px 22px 0 0;width:100%;max-width:600px;max-height:85vh;overflow-y:auto;padding:22px 18px 36px;animation:su .3s ease;border:1px solid var(--border);border-bottom:none}
-@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.mh{width:38px;height:4px;background:var(--border);border-radius:4px;margin:0 auto 18px}
-.mt{font-family:'Kanit';font-weight:800;font-size:1.2rem;margin-bottom:18px}
+.bg .orb:nth-child(2) {
+  width: 500px;
+  height: 500px;
+  background: var(--purple);
+  bottom: -200px;
+  right: -150px;
+  animation: orbFloat 18s ease-in-out infinite alternate-reverse;
+}
 
-/* ค้นหา */
-.sbox2{position:relative;margin-bottom:14px}
-.sbox2 i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--fgd);font-size:.85rem}
-.sinp{width:100%;padding:12px 14px 12px 42px;border-radius:11px;border:1px solid var(--border);background:var(--card);color:var(--fg);font-family:'Sarabun';font-size:.95rem;outline:none;transition:.2s}
-.sinp:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
+.bg .orb:nth-child(3) {
+  width: 350px;
+  height: 350px;
+  background: var(--blue);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: orbFloat 22s ease-in-out infinite alternate;
+}
 
-/* หมวดหมู่ */
-.cchips{display:flex;gap:5px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px;scrollbar-width:none}
-.cchips::-webkit-scrollbar{display:none}
-.cc{flex-shrink:0;padding:5px 12px;border-radius:7px;border:1px solid var(--border);background:0;color:var(--fgd);font-family:'Sarabun';font-size:.78rem;font-weight:600;cursor:pointer;transition:.2s;white-space:nowrap}
-.cc.on{background:var(--accent);border-color:var(--accent);color:#fff}
-.cc:not(.on):hover{border-color:var(--accent);color:var(--accent)}
+@keyframes orbFloat {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -20px) scale(1.1); }
+  100% { transform: translate(-20px, 30px) scale(0.95); }
+}
 
-/* รายการท่า */
-.epkl{display:flex;flex-direction:column;gap:3px;max-height:35vh;overflow-y:auto;padding-right:3px}
-.epkl::-webkit-scrollbar{width:3px}.epkl::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
-.epki{padding:10px 12px;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:.2s;border:1px solid transparent}
-.epki:hover{background:var(--card);border-color:var(--border)}
-.epki:active{transform:scale(.98)}
-.pkn{font-weight:600;font-size:.9rem}.pkc{font-size:.68rem;color:var(--fgd);margin-top:1px}
-.pkico{width:34px;height:34px;border-radius:9px;background:rgba(255,107,53,.1);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:.82rem;flex-shrink:0}
+.bg .grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
 
-/* ฟอร์มรายละเอียด */
-.dform{display:none;margin-top:18px;padding-top:18px;border-top:1px solid var(--border)}
-.dform.show{display:block}
-.frow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
-.fg{margin-bottom:14px}
-.fl{display:block;font-size:.75rem;color:var(--fgd);margin-bottom:5px;font-weight:600}
-.finp{width:100%;padding:11px 12px;border-radius:9px;border:1px solid var(--border);background:var(--card);color:var(--fg);font-family:'Kanit';font-weight:600;font-size:.95rem;outline:none;transition:.2s;text-align:center}
-.finp:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
-.finp::placeholder{color:var(--fgd);font-weight:400;font-size:.82rem}
-.sbtn2{width:100%;padding:13px;border:none;border-radius:11px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-family:'Kanit';font-weight:800;font-size:1rem;cursor:pointer;transition:.3s;box-shadow:0 4px 18px var(--glow)}
-.sbtn2:hover{transform:translateY(-2px);box-shadow:0 6px 26px var(--glow)}.sbtn2:active{transform:translateY(0)}
+.app {
+  position: relative;
+  z-index: 1;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 16px 16px 140px;
+}
 
-/* เลือกวันในโมดัล */
-.dpk{display:flex;gap:5px;margin-bottom:14px}
-.dpb{flex:1;padding:9px 3px;border-radius:9px;border:2px solid var(--border);background:0;color:var(--fgd);font-family:'Kanit';font-weight:800;font-size:.88rem;cursor:pointer;transition:.2s}
-.dpb.on{color:#fff;border-color:transparent}
-.dpb[data-v="1"].on{background:var(--d1)}.dpb[data-v="2"].on{background:var(--d2)}.dpb[data-v="3"].on{background:var(--d3)}
-.dpb[data-v="4"].on{background:var(--d4)}.dpb[data-v="5"].on{background:var(--d5)}.dpb[data-v="6"].on{background:var(--d6)}.dpb[data-v="7"].on{background:var(--d7)}
+.hdr {
+  text-align: center;
+  padding: 32px 0 8px;
+  position: relative;
+}
 
-/* date input */
-.datew{margin-bottom:14px}
-.dinp{width:100%;padding:11px 12px;border-radius:9px;border:1px solid var(--border);background:var(--card);color:var(--fg);font-family:'Sarabun';font-size:.95rem;outline:none;transition:.2s}
-.dinp:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
+.hdr h1 {
+  font-family: 'Kanit';
+  font-weight: 900;
+  font-size: 1.6rem;
+  letter-spacing: 4px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2), #fff, var(--accent));
+  background-size: 200% auto;
+  animation: shineText 4s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
-/* Toast */
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card);color:var(--fg);padding:11px 22px;border-radius:11px;font-family:'Kanit';font-weight:600;font-size:.88rem;border:1px solid var(--border);z-index:200;transition:transform .3s;box-shadow:0 10px 36px rgba(0,0,0,.4);display:flex;align-items:center;gap:7px;white-space:nowrap}
-.toast.show{transform:translateX(-50%) translateY(0)}
-.toast.ok{border-color:var(--success)}.toast.ok i{color:var(--success)}
-.toast.bad{border-color:var(--danger)}.toast.bad i{color:var(--danger)}
+@keyframes shineText {
+  to { background-position: 200% center; }
+}
 
-/* ===== Progressive Overload ===== */
-.po-exc{display:flex;gap:5px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;scrollbar-width:none}
-.po-exc::-webkit-scrollbar{display:none}
-.po-chip{flex-shrink:0;padding:7px 13px;border-radius:9px;border:1px solid var(--border);background:var(--card);color:var(--fgd);font-family:'Sarabun';font-size:.8rem;font-weight:600;cursor:pointer;transition:.2s;white-space:nowrap;display:flex;align-items:center;gap:5px}
-.po-chip .poc{background:rgba(255,255,255,.08);padding:1px 6px;border-radius:5px;font-size:.68rem}
-.po-chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
-.po-chip.on .poc{background:rgba(255,255,255,.25)}
-.po-toggle{display:flex;gap:3px;background:var(--bg2);border-radius:9px;padding:3px;margin-bottom:16px;border:1px solid var(--border)}
-.po-tbtn{flex:1;padding:8px;border:none;background:0;color:var(--fgd);font-family:'Kanit';font-weight:600;font-size:.82rem;border-radius:7px;cursor:pointer;transition:.2s}
-.po-tbtn.on{background:var(--accent);color:#fff}
+.hdr .sub {
+  color: var(--fg3);
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 6px;
+  font-weight: 300;
+}
 
-/* กราฟ */
-.chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px;overflow:hidden}
-.chart-area{position:relative;height:260px;display:flex}
-.chart-y{display:flex;flex-direction:column;justify-content:space-between;padding:4px 8px 28px 0;width:52px;text-align:right}
-.chart-y span{font-size:.6rem;color:var(--fgd);font-family:'Kanit';font-weight:600}
-.chart-body{flex:1;position:relative;border-left:1px solid var(--border);border-bottom:1px solid var(--border)}
-.chart-grid{position:absolute;inset:0;bottom:28px}
-.chart-grid .gl{position:absolute;left:0;width:100%;height:1px;background:var(--border);opacity:.4}
-.chart-bars{position:absolute;bottom:28px;left:0;right:0;top:0;display:flex;align-items:flex-end;justify-content:space-evenly;padding:0 8px}
-.bar-col{display:flex;flex-direction:column;align-items:center;flex:1;max-width:60px}
-.pct-badge{font-family:'Kanit';font-weight:700;font-size:.58rem;padding:2px 4px;border-radius:4px;margin-bottom:2px;white-space:nowrap;animation:si .3s ease}
-.pct-badge.up{background:rgba(34,197,94,.15);color:var(--success)}
-.pct-badge.dn{background:rgba(239,68,68,.15);color:var(--danger)}
-.pct-badge.eq{background:rgba(136,136,160,.1);color:var(--fgd)}
-.bar-v{font-family:'Kanit';font-weight:800;font-size:.68rem;color:var(--fg);margin-bottom:2px;white-space:nowrap}
-.cbar{width:60%;border-radius:5px 5px 0 0;background:linear-gradient(to top,var(--accent),var(--accent2));min-height:3px;transition:height .6s cubic-bezier(.4,0,.2,1)}
-.cbar.best{box-shadow:0 0 14px var(--glow)}
-.chart-xl{position:absolute;bottom:0;left:0;right:0;height:28px;display:flex;justify-content:space-evenly;padding:0 8px}
-.xl{flex:1;max-width:60px;text-align:center;font-size:.58rem;color:var(--fgd);line-height:28px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hdr .line {
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  margin: 12px auto 0;
+  border-radius: 2px;
+}
 
-/* PO stats */
-.po-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px}
-.po-si{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:12px}
-.po-sv{font-family:'Kanit';font-weight:900;font-size:1.15rem}
-.po-sl{font-size:.62rem;color:var(--fgd);text-transform:uppercase;letter-spacing:.4px;margin-top:2px}
-.po-sv.up{color:var(--success)}.po-sv.dn{color:var(--danger)}
+.tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--bg2);
+  border-radius: var(--radius);
+  padding: 3px;
+  margin: 24px 0 20px;
+  border: 1px solid var(--border);
+  position: relative;
+}
 
-/* ===== Rest Timer ===== */
-.rt-fab{position:fixed;bottom:24px;right:24px;z-index:90;width:56px;height:56px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:1.3rem;cursor:pointer;box-shadow:0 4px 20px var(--glow);transition:.3s;display:flex;align-items:center;justify-content:center}
-.rt-fab:hover{transform:scale(1.08)}.rt-fab:active{transform:scale(.95)}
-.rt-fab.pulse{animation:rpulse 1s ease infinite}
-@keyframes rpulse{0%,100%{box-shadow:0 4px 20px var(--glow)}50%{box-shadow:0 4px 30px rgba(255,107,53,.5)}}
-.rt-fab.done{animation:rdone .4s ease infinite alternate}
-@keyframes rdone{from{background:linear-gradient(135deg,var(--accent),var(--accent2))}to{background:linear-gradient(135deg,var(--danger),#f97316)}}
-.rt-time-fab{font-family:'Kanit';font-weight:800;font-size:.72rem;letter-spacing:-.5px}
-.rt-panel{position:fixed;bottom:92px;right:16px;z-index:89;width:260px;background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:20px;box-shadow:0 12px 48px rgba(0,0,0,.5);display:none;animation:si .25s ease}
-.rt-panel.show{display:block}
-.rt-ring-wrap{display:flex;justify-content:center;margin-bottom:14px}
-.rt-ring{position:relative;width:130px;height:130px}
-.rt-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
-.rt-ring .rbg{fill:none;stroke:var(--border);stroke-width:6}
-.rt-ring .rfg{fill:none;stroke:var(--accent);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .1s linear}
-.rt-ring .rtime{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Kanit';font-weight:900;font-size:1.8rem;color:var(--fg)}
-.rt-presets{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
-.rt-pb{padding:6px 12px;border-radius:7px;border:1px solid var(--border);background:0;color:var(--fgd);font-family:'Kanit';font-weight:700;font-size:.78rem;cursor:pointer;transition:.2s}
-.rt-pb.on{background:var(--accent);border-color:var(--accent);color:#fff}
-.rt-pb:not(.on):hover{border-color:var(--accent);color:var(--accent)}
-.rt-custom{display:flex;gap:6px;margin-bottom:12px}
-.rt-cinp{flex:1;padding:8px 10px;border-radius:7px;border:1px solid var(--border);background:var(--card);color:var(--fg);font-family:'Kanit';font-weight:600;font-size:.9rem;outline:none;text-align:center;transition:.2s}
-.rt-cinp:focus{border-color:var(--accent)}
-.rt-ctrls{display:flex;gap:6px}
-.rt-cbtn{flex:1;padding:10px;border:none;border-radius:9px;font-family:'Kanit';font-weight:700;font-size:.85rem;cursor:pointer;transition:.2s}
-.rt-start{background:var(--success);color:#fff}.rt-start:hover{filter:brightness(1.15)}
-.rt-pause{background:var(--accent2);color:#000}.rt-pause:hover{filter:brightness(1.15)}
-.rt-reset{background:var(--card);color:var(--fgd);border:1px solid var(--border)!important}.rt-reset:hover{border-color:var(--danger)!important;color:var(--danger)}
+.tabs::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--radius);
+  padding: 1px;
+  background: linear-gradient(135deg, var(--accent), transparent, var(--purple));
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.3;
+}
 
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
-@media(max-width:400px){.chart-y{width:40px}.chart-y span{font-size:.52rem}.bar-v{font-size:.58rem}.rt-panel{right:8px;width:240px}}
+.tbtn {
+  flex: 1;
+  padding: 11px 4px;
+  border: none;
+  background: 0;
+  color: var(--fg3);
+  font-family: 'Kanit';
+  font-weight: 600;
+  font-size: 0.78rem;
+  border-radius: var(--radius2);
+  cursor: pointer;
+  transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  position: relative;
+  letter-spacing: 0.5px;
+}
+
+.tbtn.on {
+  background: linear-gradient(135deg, var(--accent3), var(--accent));
+  color: #fff;
+  box-shadow: 0 4px 24px var(--glow), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+.tbtn:not(.on):hover {
+  color: var(--fg2);
+  background: var(--glass2);
+}
+
+.tcon {
+  display: none;
+}
+
+.tcon.on {
+  display: block;
+  animation: fadeUp 0.35s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.day-sel {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 18px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.day-sel::-webkit-scrollbar {
+  display: none;
+}
+
+.dchip {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border-radius: var(--radius3);
+  border: 1px solid var(--border);
+  background: var(--glass);
+  color: var(--fg3);
+  font-family: 'Kanit';
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.dchip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.dchip .cnt {
+  background: var(--glass2);
+  padding: 1px 7px;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-family: 'Space Grotesk';
+}
+
+.dchip.on {
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.dchip.on::before {
+  opacity: 1;
+}
+
+.dchip[data-d="1"].on { background: var(--d1); }
+.dchip[data-d="1"]::before { background: linear-gradient(135deg, var(--d1), #c06020); }
+.dchip[data-d="2"].on { background: var(--d2); }
+.dchip[data-d="2"]::before { background: linear-gradient(135deg, var(--d2), #c09030); }
+.dchip[data-d="3"].on { background: var(--d3); }
+.dchip[data-d="3"]::before { background: linear-gradient(135deg, var(--d3), #20a060); }
+.dchip[data-d="4"].on { background: var(--d4); }
+.dchip[data-d="4"]::before { background: linear-gradient(135deg, var(--d4), #2070c0); }
+.dchip[data-d="5"].on { background: var(--d5); }
+.dchip[data-d="5"]::before { background: linear-gradient(135deg, var(--d5), #7050c0); }
+.dchip[data-d="6"].on { background: var(--d6); }
+.dchip[data-d="6"]::before { background: linear-gradient(135deg, var(--d6), #c04070); }
+.dchip[data-d="7"].on { background: var(--d7); }
+.dchip[data-d="7"]::before { background: linear-gradient(135deg, var(--d7), #209090); }
+
+.addbtn {
+  width: 100%;
+  padding: 14px;
+  border: 1px dashed var(--border2);
+  border-radius: var(--radius);
+  background: var(--glass);
+  color: var(--fg3);
+  font-family: 'Kanit';
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 0.4s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.addbtn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--glow2), transparent);
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.addbtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px var(--glow2);
+}
+
+.addbtn:hover::after {
+  opacity: 1;
+}
+
+.elist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ecard {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: cardIn 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.ecard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--glass3), transparent);
+}
+
+.ecard:hover {
+  border-color: var(--border2);
+  background: var(--glass2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.etop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.ename {
+  font-family: 'Kanit';
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--fg);
+  flex: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius3);
+  border: 1px solid transparent;
+  transition: 0.3s;
+  outline: none;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.ename:hover { background: var(--glass2); }
+
+.ename:focus {
+  background: var(--bg3);
+  border-color: var(--accent);
+  cursor: text;
+  box-shadow: 0 0 0 3px var(--glow2);
+}
+
+.ibtn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  transition: 0.3s;
+  flex-shrink: 0;
+  margin-left: 6px;
+  background: var(--glass);
+}
+
+.ibtn.del { color: var(--red); }
+
+.ibtn.del:hover {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+  transform: scale(1.1);
+  box-shadow: 0 0 16px rgba(240,80,80,0.3);
+}
+
+.ibtn.dup { color: var(--green); }
+
+.ibtn.dup:hover {
+  background: var(--green);
+  color: #000;
+  border-color: var(--green);
+  transform: scale(1.1);
+  box-shadow: 0 0 16px rgba(64,216,128,0.3);
+}
+
+.estats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.sbox {
+  background: var(--bg2);
+  border-radius: var(--radius3);
+  padding: 10px 8px;
+  text-align: center;
+  border: 1px solid var(--border);
+  transition: 0.3s;
+}
+
+.sbox:hover { border-color: var(--border2); }
+
+.slbl {
+  font-size: 0.55rem;
+  color: var(--fg3);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.sval {
+  font-family: 'Kanit';
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--fg);
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  outline: none;
+  transition: 0.3s;
+  display: inline-block;
+}
+
+.sval:hover { background: var(--glass2); }
+
+.sval:focus {
+  background: var(--bg);
+  border-color: var(--accent);
+  cursor: text;
+  box-shadow: 0 0 0 3px var(--glow2);
+}
+
+.sunit {
+  font-size: 0.6rem;
+  color: var(--fg3);
+  font-weight: 300;
+}
+
+.sbar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.sitem {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius2);
+  padding: 14px 10px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.sitem::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  border-radius: 1px;
+}
+
+.snum {
+  font-family: 'Kanit';
+  font-weight: 900;
+  font-size: 1.3rem;
+}
+
+.slbl2 {
+  font-size: 0.55rem;
+  color: var(--fg3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+.dhdr {
+  font-family: 'Kanit';
+  font-weight: 600;
+  font-size: 0.78rem;
+  color: var(--fg3);
+  padding: 8px 4px 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dhdr::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+
+.ddel {
+  background: 0;
+  border: 1px solid var(--border);
+  color: var(--fg3);
+  cursor: pointer;
+  font-size: 0.68rem;
+  padding: 3px 8px;
+  border-radius: 6px;
+  transition: 0.3s;
+  font-family: 'Space Grotesk';
+}
+
+.ddel:hover {
+  border-color: var(--red);
+  color: var(--red);
+  background: rgba(240,80,80,0.08);
+}
+
+.drow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.dtit {
+  font-family: 'Kanit';
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+
+.clrbtn {
+  padding: 5px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--glass);
+  color: var(--fg3);
+  font-family: 'Space Grotesk';
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+}
+
+.clrbtn:hover {
+  border-color: var(--red);
+  color: var(--red);
+  background: rgba(240,80,80,0.06);
+}
+
+.empty {
+  text-align: center;
+  padding: 50px 20px;
+  color: var(--fg3);
+}
+
+.empty i {
+  font-size: 2.5rem;
+  margin-bottom: 14px;
+  opacity: 0.15;
+  display: block;
+}
+
+.empty p {
+  font-size: 0.82rem;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+.mo {
+  position: fixed;
+  inset: 0;
+  background: rgba(4,4,8,0.85);
+  backdrop-filter: blur(12px);
+  z-index: 100;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.mo.show {
+  display: flex;
+  animation: modalFade 0.2s ease;
+}
+
+@keyframes modalFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.md {
+  background: var(--bg2);
+  border-radius: 24px 24px 0 0;
+  width: 100%;
+  max-width: 520px;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 20px 18px 40px;
+  animation: modalSlide 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  position: relative;
+}
+
+.md::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--purple), transparent);
+  opacity: 0.4;
+}
+
+@keyframes modalSlide {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.mh {
+  width: 36px;
+  height: 4px;
+  background: var(--glass3);
+  border-radius: 4px;
+  margin: 0 auto 18px;
+}
+
+.mt {
+  font-family: 'Kanit';
+  font-weight: 800;
+  font-size: 1.15rem;
+  margin-bottom: 18px;
+  letter-spacing: 0.5px;
+}
+
+.sbox2 {
+  position: relative;
+  margin-bottom: 14px;
+}
+
+.sbox2 > i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--fg3);
+  font-size: 0.85rem;
+}
+
+.sinp {
+  width: 100%;
+  padding: 13px 14px 13px 42px;
+  border-radius: var(--radius2);
+  border: 1px solid var(--border);
+  background: var(--glass);
+  color: var(--fg);
+  font-family: 'Space Grotesk';
+  font-size: 0.9rem;
+  outline: none;
+  transition: 0.3s;
+}
+
+.sinp:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--glow2);
+}
+
+.cchips {
+  display: flex;
+  gap: 5px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+  scrollbar-width: none;
+}
+
+.cchips::-webkit-scrollbar { display: none; }
+
+.cc {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--glass);
+  color: var(--fg3);
+  font-family: 'Space Grotesk';
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+  white-space: nowrap;
+}
+
+.cc.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+  font-weight: 600;
+  box-shadow: 0 2px 12px var(--glow);
+}
+
+.cc:not(.on):hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.epkl {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  max-height: 35vh;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.epki {
+  padding: 11px 14px;
+  border-radius: var(--radius3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: 0.3s;
+  border: 1px solid transparent;
+}
+
+.epki:hover {
+  background: var(--glass2);
+  border-color: var(--border);
+}
+
+.epki:active { transform: scale(0.98); }
+
+.pkn { font-weight: 600; font-size: 0.88rem; }
+.pkc { font-size: 0.65rem; color: var(--fg3); margin-top: 2px; font-weight: 300; }
+
+.pkico {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius3);
+  background: linear-gradient(135deg, var(--glow2), var(--glass2));
+  border: 1px solid var(--border);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.dform {
+  display: none;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.dform.show {
+  display: block;
+  animation: fadeUp 0.3s ease;
+}
+
+.frow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.fg { margin-bottom: 16px; }
+
+.fl {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--fg3);
+  margin-bottom: 6px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.finp {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius3);
+  border: 1px solid var(--border);
+  background: var(--glass);
+  color: var(--fg);
+  font-family: 'Kanit';
+  font-weight: 700;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.3s;
+  text-align: center;
+}
+
+.finp:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--glow2);
+}
+
+.finp::placeholder {
+  color: var(--fg3);
+  font-weight: 300;
+  font-size: 0.8rem;
+}
+
+.sbtn2 {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: var(--radius2);
+  background: linear-gradient(135deg, var(--accent3), var(--accent), var(--accent2));
+  color: #000;
+  font-family: 'Kanit';
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.4s;
+  box-shadow: 0 4px 24px var(--glow);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+}
+
+.sbtn2::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent, rgba(255,255,255,0.2), transparent);
+  transform: translateX(-100%);
+  transition: 0.6s;
+}
+
+.sbtn2:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px var(--glow);
+}
+
+.sbtn2:hover::before { transform: translateX(100%); }
+.sbtn2:active { transform: translateY(0); }
+
+.dpk {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 16px;
+}
+
+.dpb {
+  flex: 1;
+  padding: 10px 3px;
+  border-radius: var(--radius3);
+  border: 1px solid var(--border);
+  background: var(--glass);
+  color: var(--fg3);
+  font-family: 'Kanit';
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.dpb.on {
+  color: #000;
+  border-color: transparent;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+
+.dpb[data-v="1"].on { background: var(--d1); }
+.dpb[data-v="1"]::before { background: var(--d1); }
+.dpb[data-v="2"].on { background: var(--d2); }
+.dpb[data-v="2"]::before { background: var(--d2); }
+.dpb[data-v="3"].on { background: var(--d3); }
+.dpb[data-v="3"]::before { background: var(--d3); }
+.dpb[data-v="4"].on { background: var(--d4); }
+.dpb[data-v="4"]::before { background: var(--d4); }
+.dpb[data-v="5"].on { background: var(--d5); }
+.dpb[data-v="5"]::before { background: var(--d5); }
+.dpb[data-v="6"].on { background: var(--d6); }
+.dpb[data-v="6"]::before { background: var(--d6); }
+.dpb[data-v="7"].on { background: var(--d7); }
+.dpb[data-v="7"]::before { background: var(--d7); }
+
+.datew { margin-bottom: 16px; }
+
+.dinp {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius3);
+  border: 1px solid var(--border);
+  background: var(--glass);
+  color: var(--fg);
+  font-family: 'Space Grotesk';
+  font-size: 0.9rem;
+  outline: none;
+  transition: 0.3s;
+}
+
+.dinp:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--glow2);
+}
+
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--bg3);
+  color: var(--fg);
+  padding: 12px 24px;
+  border-radius: var(--radius2);
+  font-family: 'Kanit';
+  font-weight: 600;
+  font-size: 0.85rem;
+  border: 1px solid var(--border2);
+  z-index: 200;
+  transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  backdrop-filter: blur(12px);
+}
+
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.ok { border-color: rgba(64,216,128,0.3); }
+.toast.ok i { color: var(--green); }
+.toast.bad { border-color: rgba(240,80,80,0.3); }
+.toast.bad i { color: var(--red); }
+
+.po-exc {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-bottom: 16px;
+  scrollbar-width: none;
+}
+
+.po-exc::-webkit-scrollbar { display: none; }
+
+.po-chip {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--glass);
+  color: var(--fg3);
+  font-family: 'Space Grotesk';
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.po-chip .poc {
+  background: var(--glass2);
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-size: 0.65rem;
+}
+
+.po-chip.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+  font-weight: 600;
+  box-shadow: 0 2px 12px var(--glow);
+}
+
+.po-chip.on .poc { background: rgba(0,0,0,0.15); }
+
+.po-toggle {
+  display: flex;
+  gap: 2px;
+  background: var(--bg2);
+  border-radius: var(--radius3);
+  padding: 3px;
+  margin-bottom: 18px;
+  border: 1px solid var(--border);
+}
+
+.po-tbtn {
+  flex: 1;
+  padding: 9px;
+  border: none;
+  background: 0;
+  color: var(--fg3);
+  font-family: 'Kanit';
+  font-weight: 600;
+  font-size: 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.po-tbtn.on { background: var(--accent); color: #000; }
+
+.chart-wrap {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.chart-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--glass3), transparent);
+}
+
+.chart-area {
+  position: relative;
+  height: 260px;
+  display: flex;
+}
+
+.chart-y {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4px 10px 28px 0;
+  width: 54px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.chart-y span {
+  font-size: 0.58rem;
+  color: var(--fg3);
+  font-family: 'Space Grotesk';
+  font-weight: 500;
+}
+
+.chart-body {
+  flex: 1;
+  position: relative;
+  border-left: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.chart-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 28px;
+  pointer-events: none;
+}
+
+.chart-grid .gl {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  opacity: 0.5;
+}
+
+.chart-bars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 28px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  padding: 0 8px;
+}
+
+.bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  max-width: 56px;
+}
+
+.pct-badge {
+  font-family: 'Space Grotesk';
+  font-weight: 700;
+  font-size: 0.55rem;
+  padding: 2px 5px;
+  border-radius: 6px;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  animation: fadeUp 0.3s ease;
+}
+
+.pct-badge.up {
+  background: rgba(64,216,128,0.1);
+  color: var(--green);
+  border: 1px solid rgba(64,216,128,0.2);
+}
+
+.pct-badge.dn {
+  background: rgba(240,80,80,0.1);
+  color: var(--red);
+  border: 1px solid rgba(240,80,80,0.2);
+}
+
+.pct-badge.eq {
+  background: var(--glass2);
+  color: var(--fg3);
+  border: 1px solid var(--border);
+}
+
+.bar-v {
+  font-family: 'Space Grotesk';
+  font-weight: 700;
+  font-size: 0.65rem;
+  color: var(--fg2);
+  margin-bottom: 3px;
+  white-space: nowrap;
+}
+
+.cbar {
+  width: 55%;
+  border-radius: 6px 6px 0 0;
+  min-height: 3px;
+  transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.cbar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.15), transparent);
+  border-radius: inherit;
+}
+
+.cbar.best {
+  box-shadow: 0 0 20px var(--glow);
+}
+
+.chart-xl {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0 8px;
+}
+
+.xl {
+  flex: 1;
+  max-width: 56px;
+  text-align: center;
+  font-size: 0.55rem;
+  color: var(--fg3);
+  line-height: 28px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+
+.po-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.po-si {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius2);
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.po-si::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--glass3), transparent);
+}
+
+.po-sv {
+  font-family: 'Kanit';
+  font-weight: 900;
+  font-size: 1.15rem;
+}
+
+.po-sl {
+  font-size: 0.58rem;
+  color: var(--fg3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+.po-sv.up { color: var(--green); }
+.po-sv.dn { color: var(--red); }
+
+.rt-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 90;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--accent);
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 0 0 1px var(--border);
+  transition: 0.4s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(12px);
+}
+
+.rt-fab:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 20px var(--glow2);
+  border-color: var(--accent);
+}
+
+.rt-fab:active { transform: scale(0.95); }
+
+.rt-fab.pulse {
+  animation: rtPulse 1.5s ease infinite;
+  border-color: var(--accent);
+}
+
+@keyframes rtPulse {
+  0%, 100% { box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 0 0 0 var(--glow); }
+  50% { box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 0 0 10px transparent; }
+}
+
+.rt-fab.done {
+  animation: rtDone 0.5s ease infinite alternate;
+  border-color: var(--red);
+  color: var(--red);
+}
+
+@keyframes rtDone {
+  from { box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 0 0 0 rgba(240,80,80,0.3); }
+  to { box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 0 0 12px transparent; }
+}
+
+.rt-time-fab {
+  font-family: 'Kanit';
+  font-weight: 800;
+  font-size: 0.68rem;
+  letter-spacing: -0.5px;
+}
+
+.rt-panel {
+  position: fixed;
+  bottom: 96px;
+  right: 16px;
+  z-index: 89;
+  width: 270px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: 0 16px 56px rgba(0,0,0,0.6);
+  display: none;
+  animation: fadeUp 0.3s ease;
+  backdrop-filter: blur(16px);
+}
+
+.rt-panel.show { display: block; }
+
+.rt-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--purple), transparent);
+  opacity: 0.4;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.rt-ring-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.rt-ring {
+  position: relative;
+  width: 140px;
+  height: 140px;
+}
+
+.rt-ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.rt-ring .rbg {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 5;
+}
+
+.rt-ring .rfg {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.1s linear;
+  filter: drop-shadow(0 0 6px var(--glow));
+}
+
+.rt-ring .rtime {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Kanit';
+  font-weight: 200;
+  font-size: 2.2rem;
+  color: var(--fg);
+  letter-spacing: 2px;
+}
+
+.rt-presets {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.rt-pb {
+  padding: 7px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--glass);
+  color: var(--fg3);
+  font-family: 'Space Grotesk';
+  font-weight: 600;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.rt-pb.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+  box-shadow: 0 2px 12px var(--glow);
+}
+
+.rt-pb:not(.on):hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.rt-custom {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.rt-cinp {
+  flex: 1;
+  padding: 9px 12px;
+  border-radius: var(--radius3);
+  border: 1px solid var(--border);
+  background: var(--glass);
+  color: var(--fg);
+  font-family: 'Kanit';
+  font-weight: 600;
+  font-size: 0.9rem;
+  outline: none;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.rt-cinp:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--glow2);
+}
+
+.rt-ctrls {
+  display: flex;
+  gap: 8px;
+}
+
+.rt-cbtn {
+  flex: 1;
+  padding: 11px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius3);
+  font-family: 'Kanit';
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: 0.3s;
+  background: var(--glass);
+  color: var(--fg2);
+}
+
+.rt-cbtn.start {
+  background: var(--green);
+  border-color: var(--green);
+  color: #000;
+}
+
+.rt-cbtn.start:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 4px 16px rgba(64,216,128,0.3);
+}
+
+.rt-cbtn.pause {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+}
+
+.rt-cbtn.pause:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 4px 16px var(--glow);
+}
+
+.rt-cbtn.reset {
+  color: var(--fg3);
+}
+
+.rt-cbtn.reset:hover {
+  border-color: var(--red);
+  color: var(--red);
+  background: rgba(240,80,80,0.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .chart-y { width: 40px; }
+  .chart-y span { font-size: 0.5rem; }
+  .bar-v { font-size: 0.55rem; }
+  .rt-panel { right: 8px; width: 250px; }
+}
 </style>
 </head>
 <body>
 
-<div class="bg-fx"><div class="b"></div><div class="b"></div><div class="b"></div></div>
-
-<div class="app">
-  <header>
-    <h1>WORKOUT PRO</h1>
-    <p>แผน ประวัติ และ Progressive Overload</p>
-  </header>
-
-  <nav class="tabs" role="tablist">
-    <button class="tbtn on" data-t="plan" role="tab" aria-selected="true"><i class="fas fa-calendar-alt"></i> แผน</button>
-    <button class="tbtn" data-t="history" role="tab" aria-selected="false"><i class="fas fa-clock-rotate-left"></i> ประวัติ</button>
-    <button class="tbtn" data-t="progress" role="tab" aria-selected="false"><i class="fas fa-chart-line"></i> Progress</button>
-  </nav>
-
-  <main>
-    <section class="tcon on" id="tp-plan" role="tabpanel"></section>
-    <section class="tcon" id="tp-history" role="tabpanel"></section>
-    <section class="tcon" id="tp-progress" role="tabpanel"></section>
-  </main>
+<div class="bg">
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="grain"></div>
 </div>
 
-<!-- Rest Timer FAB -->
-<button class="rt-fab" id="rtFab" aria-label="ตั้งเวลาพัก"><i class="fas fa-stopwatch"></i></button>
-<aside class="rt-panel" id="rtPanel">
+<div class="app">
+  <header class="hdr">
+    <h1>WORKOUT PRO</h1>
+    <div class="sub">Progressive Overload Tracker</div>
+    <div class="line"></div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tbtn on" data-t="plan"><i class="fa-solid var(--accent) fa-calendar-day"></i> ตารางซ้อม</button>
+    <button class="tbtn" data-t="log"><i class="fa-solid fa-dumbbell"></i> บันทึกยก</button>
+    <button class="tbtn" data-t="po"><i class="fa-solid fa-chart-line"></i> วิเคราะห์กราฟ</button>
+  </nav>
+
+  <section class="tcon on" id="tab-plan">
+    <div class="day-sel" id="planDaySel"></div>
+    <button class="addbtn" id="planAddBtn"><i class="fa-solid fa-plus"></i> เพิ่มท่าฝึกในแผน</button>
+    <div class="elist" id="planList"></div>
+  </section>
+
+  <section class="tcon" id="tab-log">
+    <div class="drow">
+      <div class="datew">
+        <label class="fl">วันที่ทำกิจกรรม</label>
+        <input type="date" class="dinp" id="logDate">
+      </div>
+      <button class="clrbtn" id="logClearBtn"><i class="fa-solid fa-trash-can"></i> ล้างวันนี้</button>
+    </div>
+    <button class="addbtn" id="logAddBtn"><i class="fa-solid fa-plus"></i> บันทึกการยกวันนี้</button>
+    <div class="elist" id="logList"></div>
+  </section>
+
+  <section class="tcon" id="tab-po">
+    <div class="po-exc" id="poExcSel"></div>
+    <div id="poContent"></div>
+  </section>
+</div>
+
+<button class="rt-fab" id="rtFab">
+  <i class="fa-solid fa-clock" id="rtIcon"></i>
+  <span class="rt-time-fab" id="rtFabTime" style="display:none;">00</span>
+</button>
+
+<div class="rt-panel" id="rtPanel">
   <div class="rt-ring-wrap">
     <div class="rt-ring">
-      <svg viewBox="0 0 130 130"><circle class="rbg" cx="65" cy="65" r="56"/><circle class="rfg" id="rtRing" cx="65" cy="65" r="56" stroke-dasharray="351.86" stroke-dashoffset="0"/></svg>
-      <div class="rtime" id="rtDisplay">1:00</div>
+      <svg>
+        <circle class="rbg" cx="70" cy="70" r="62"></circle>
+        <circle class="rfg" id="rtCircle" cx="70" cy="70" r="62"></circle>
+      </svg>
+      <div class="rtime" id="rtDisplay">00:00</div>
     </div>
   </div>
   <div class="rt-presets" id="rtPresets">
-    <button class="rt-pb" data-s="30">30s</button>
     <button class="rt-pb on" data-s="60">60s</button>
     <button class="rt-pb" data-s="90">90s</button>
-    <button class="rt-pb" data-s="120">2m</button>
-    <button class="rt-pb" data-s="180">3m</button>
+    <button class="rt-pb" data-s="120">2min</button>
+    <button class="rt-pb" data-s="180">3min</button>
   </div>
   <div class="rt-custom">
-    <input type="number" class="rt-cinp" id="rtCustom" placeholder="วินาที" min="1" max="3600">
-    <button class="rt-pb" id="rtSetCustom" style="flex-shrink:0">ตั้ง</button>
+    <input type="text" inputmode="numeric" pattern="[0-9]*" class="rt-cinp" id="rtCustom" placeholder="วินาที (กำหนดเอง)">
+    <button class="clrbtn" id="rtSetCustom" style="padding:0 14px; border-color:var(--border2);">ตั้ง</button>
   </div>
   <div class="rt-ctrls">
-    <button class="rt-cbtn rt-start" id="rtStartBtn"><i class="fas fa-play"></i> เริ่ม</button>
-    <button class="rt-cbtn rt-reset" id="rtResetBtn"><i class="fas fa-undo"></i></button>
+    <button class="rt-cbtn start" id="rtStartBtn">เริ่ม</button>
+    <button class="rt-cbtn reset" id="rtResetBtn">รีเซ็ต</button>
   </div>
-</aside>
+</div>
 
-<!-- โมดัลเพิ่มท่า -->
-<div class="mo" id="modal" role="dialog" aria-modal="true" aria-label="เพิ่มท่าออกกำลังกาย">
+<div class="mo" id="exerciseModal">
   <div class="md">
     <div class="mh"></div>
-    <div class="mt" id="modalTitle">เพิ่มท่าออกกำลังกาย</div>
-
-    <!-- แผน: เลือกวัน -->
-    <div id="modalDayPick" class="dpk" style="display:none"></div>
-
-    <!-- ประวัติ: เลือกวันที่ -->
-    <div id="modalDatePick" class="datew" style="display:none">
-      <label class="fl">วันที่</label>
-      <input type="date" class="dinp" id="modalDateInput">
-    </div>
-
+    <div class="mt" id="modalTitle">เลือกท่าฝึกซ้อม</div>
     <div class="sbox2">
-      <i class="fas fa-search"></i>
-      <input type="text" class="sinp" id="modalSearch" placeholder="ค้นหาท่าออกกำลังกาย..." autocomplete="off">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" class="sinp" id="modalSearch" placeholder="พิมพ์เพื่อค้นหาท่าฝึก...">
     </div>
     <div class="cchips" id="modalCats"></div>
     <div class="epkl" id="modalList"></div>
 
-    <!-- ฟอร์มใส่ค่า -->
     <div class="dform" id="modalForm">
-      <div style="margin-bottom:10px">
-        <span style="font-family:'Kanit';font-weight:700;font-size:.95rem" id="modalPickedName"></span>
-      </div>
+      <div class="dhdr"><span id="modalPickedName">—</span></div>
       <div class="frow">
         <div class="fg">
           <label class="fl">น้ำหนัก (kg)</label>
-          <input type="number" class="finp" id="formWeight" placeholder="0" min="0" step="0.5">
+          <input type="number" step="any" min="0" class="finp" id="formWeight" placeholder="0">
         </div>
         <div class="fg">
-          <label class="fl">Reps</label>
-          <input type="number" class="finp" id="formReps" placeholder="0" min="0">
+          <label class="fl">จำนวนครั้ง</label>
+          <input type="number" min="0" class="finp" id="formReps" placeholder="0">
         </div>
         <div class="fg">
-          <label class="fl">Sets</label>
-          <input type="number" class="finp" id="formSets" placeholder="0" min="0">
+          <label class="fl">จำนวนเซ็ต</label>
+          <input type="number" min="0" class="finp" id="formSets" placeholder="1">
         </div>
       </div>
-      <button class="sbtn2" id="formSubmit"><i class="fas fa-plus"></i> เพิ่ม</button>
+      <button class="sbtn2" id="modalSubmitBtn">ยืนยันเพิ่มรายการ</button>
     </div>
   </div>
 </div>
 
-<!-- Toast -->
-<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg"></span></div>
+<div class="toast" id="toast"><i class="fa-solid"></i> <span id="toastMsg"></span></div>
 
 <script>
-/* ============================================================
-   ฐานข้อมูลท่าออกกำลังกาย
-   ============================================================ */
-const EXERCISES = [
-  { name: "Bench Press", cat: "หน้าอก", icon: "fa-dumbbell" },
-  { name: "Incline Dumbbell Press", cat: "หน้าอก", icon: "fa-dumbbell" },
-  { name: "Cable Crossover", cat: "หน้าอก", icon: "fa-arrows-left-right" },
-  { name: "Chest Dip", cat: "หน้าอก", icon: "fa-arrow-down" },
-  { name: "Push Up", cat: "หน้าอก", icon: "fa-hand-fist" },
-  { name: "Machine Chest Press", cat: "หน้าอก", icon: "fa-dumbbell" },
-  { name: "Fly Machine", cat: "หน้าอก", icon: "fa-arrows-left-right" },
-  { name: "Deadlift", cat: "หลัง", icon: "fa-weight-hanging" },
-  { name: "Pull Up", cat: "หลัง", icon: "fa-arrow-up" },
-  { name: "Barbell Row", cat: "หลัง", icon: "fa-dumbbell" },
-  { name: "Lat Pulldown", cat: "หลัง", icon: "fa-arrow-down" },
-  { name: "Seated Cable Row", cat: "หลัง", icon: "fa-arrows-left-right" },
-  { name: "T-Bar Row", cat: "หลัง", icon: "fa-dumbbell" },
-  { name: "Overhead Press", cat: "ไหล่", icon: "fa-dumbbell" },
-  { name: "Lateral Raise", cat: "ไหล่", icon: "fa-arrows-left-right" },
-  { name: "Front Raise", cat: "ไหล่", icon: "fa-arrow-up" },
-  { name: "Reverse Fly", cat: "ไหล่", icon: "fa-arrows-left-right" },
-  { name: "Arnold Press", cat: "ไหล่", icon: "fa-dumbbell" },
-  { name: "Face Pull", cat: "ไหล่", icon: "fa-arrows-left-right" },
-  { name: "Barbell Curl", cat: "แขน", icon: "fa-dumbbell" },
-  { name: "Hammer Curl", cat: "แขน", icon: "fa-dumbbell" },
-  { name: "Tricep Pushdown", cat: "แขน", icon: "fa-arrow-down" },
-  { name: "Skull Crusher", cat: "แขน", icon: "fa-dumbbell" },
-  { name: "Preacher Curl", cat: "แขน", icon: "fa-dumbbell" },
-  { name: "Overhead Tricep Ext", cat: "แขน", icon: "fa-arrow-up" },
-  { name: "Squat", cat: "ขา", icon: "fa-person" },
-  { name: "Leg Press", cat: "ขา", icon: "fa-weight-hanging" },
-  { name: "Romanian Deadlift", cat: "ขา", icon: "fa-weight-hanging" },
-  { name: "Leg Extension", cat: "ขา", icon: "fa-arrow-up" },
-  { name: "Leg Curl", cat: "ขา", icon: "fa-arrow-down" },
-  { name: "Bulgarian Split Sq", cat: "ขา", icon: "fa-person" },
-  { name: "Calf Raise", cat: "ขา", icon: "fa-arrow-up" },
-  { name: "Hip Thrust", cat: "ขา", icon: "fa-person" },
-  { name: "Lunge", cat: "ขา", icon: "fa-person-walking" },
-  { name: "Crunch", cat: "ท้อง", icon: "fa-person" },
-  { name: "Plank", cat: "ท้อง", icon: "fa-person" },
-  { name: "Leg Raise", cat: "ท้อง", icon: "fa-arrow-up" },
-  { name: "Russian Twist", cat: "ท้อง", icon: "fa-rotate" },
-  { name: "Ab Wheel", cat: "ท้อง", icon: "fa-circle" },
-  { name: "Running", cat: "คาร์ดิโอ", icon: "fa-person-running" },
-  { name: "Cycling", cat: "คาร์ดิโอ", icon: "fa-bicycle" },
-  { name: "Jump Rope", cat: "คาร์ดิโอ", icon: "fa-heart-pulse" },
-  { name: "Rowing", cat: "คาร์ดิโอ", icon: "fa-water" }
+// ==========================================
+// DATA ARCHITECTURE & SEED DATA
+// ==========================================
+var EXERCISE_DB = [
+  { name: "Bench Press", cat: "Chest", ico: "fa-square" },
+  { name: "Incline Dumbbell Press", cat: "Chest", ico: "fa-circle" },
+  { name: "Chest Fly", cat: "Chest", ico: "fa-heart" },
+  { name: "Squat", cat: "Legs", ico: "fa-angles-down" },
+  { name: "Leg Press", cat: "Legs", ico: "fa-tablet" },
+  { name: "Leg Extension", cat: "Legs", ico: "fa-play" },
+  { name: "Deadlift", cat: "Back", ico: "fa-bolt" },
+  { name: "Lat Pulldown", cat: "Back", ico: "fa-arrow-down-wide-short" },
+  { name: "Overhead Press", cat: "Shoulders", ico: "fa-arrow-up" },
+  { name: "Lateral Raise", cat: "Shoulders", ico: "fa-arrows-left-right" },
+  { name: "Bicep Curl", cat: "Arms", ico: "fa-gavel" },
+  { name: "Tricep Pushdown", cat: "Arms", ico: "fa-arrow-down" },
+  { name: "Plank", cat: "Core", ico: "fa-window-minimize" }
 ];
 
-const CATEGORIES = ["ทั้งหมด", ...new Set(EXERCISES.map(e => e.cat))];
+var DAYS = [
+  { id: 1, name: "จันทร์" }, { id: 2, name: "อังคาร" }, { id: 3, name: "พุธ" },
+  { id: 4, name: "พฤหัสฯ" }, { id: 5, name: "ศุกร์" }, { id: 6, name: "เสาร์" }, { id: 7, name: "อาทิตย์" }
+];
 
-/* ============================================================
-   สถานะแอป
-   ============================================================ */
-let currentTab = "plan";
-let currentDay = 1;
-let selectedCategory = "ทั้งหมด";
-let pickedExercise = null;
-let modalMode = "plan";   // "plan" หรือ "history"
-let modalDay = 1;
-let poSelectedExercise = null;
-let poView = "weight";
+var state = {
+  currentTab: "plan",
+  currentDay: 1,
+  currentLogDate: new Date().toISOString().split('T')[0],
+  poSelectedExercise: "",
+  poMetric: "volume" // volume, or max
+};
 
-/* ============================================================
-   LocalStorage helpers
-   ============================================================ */
-function loadPlan() {
-  try {
-    const data = JSON.parse(localStorage.getItem("wp_plan"));
-    if (data && typeof data === "object") return data;
-  } catch(e) {}
-  return { "1": [], "2": [], "3": [], "4": [], "5": [], "6": [], "7": [] };
+var planData = JSON.parse(localStorage.getItem("po_plan_v3")) || {};
+var logData = JSON.parse(localStorage.getItem("po_log_v3")) || {};
+
+function saveAll() {
+  localStorage.setItem("po_plan_v3", JSON.stringify(planData));
+  localStorage.setItem("po_log_v3", JSON.stringify(logData));
 }
 
-function savePlan(data) {
-  localStorage.setItem("wp_plan", JSON.stringify(data));
+// ==========================================
+// TOAST NOTIFICATION
+// ==========================================
+var toastTimeout;
+function showToast(msg, isOk) {
+  var t = document.getElementById("toast");
+  var icon = t.querySelector("i");
+  document.getElementById("toastMsg").textContent = msg;
+  t.className = "toast " + (isOk ? "ok show" : "bad show");
+  icon.className = "fa-solid " + (isOk ? "fa-circle-check" : "fa-circle-xmark");
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(function () { t.classList.remove("show"); }, 2400);
 }
 
-function loadHistory() {
-  try {
-    const data = JSON.parse(localStorage.getItem("wp_hist"));
-    if (Array.isArray(data)) return data;
-  } catch(e) {}
-  return [];
-}
-
-function saveHistory(data) {
-  localStorage.setItem("wp_hist", JSON.stringify(data));
-}
-
-function genId() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
-}
-
-function escapeHtml(str) {
-  const div = document.createElement("div");
-  div.textContent = str;
-  return div.innerHTML;
-}
-
-/* ============================================================
-   Toast
-   ============================================================ */
-let toastTimer = null;
-function showToast(message, type) {
-  type = type || "ok";
-  const toastEl = document.getElementById("toast");
-  const iconEl = toastEl.querySelector("i");
-  document.getElementById("toastMsg").textContent = message;
-  toastEl.className = "toast " + type;
-  iconEl.className = (type === "ok") ? "fas fa-check-circle" : "fas fa-trash";
-  clearTimeout(toastTimer);
-  requestAnimationFrame(function() {
-    toastEl.classList.add("show");
-  });
-  toastTimer = setTimeout(function() {
-    toastEl.classList.remove("show");
-  }, 2200);
-}
-
-/* ============================================================
-   สลับแท็บ
-   ============================================================ */
-document.querySelectorAll(".tbtn").forEach(function(btn) {
-  btn.addEventListener("click", function() {
-    document.querySelectorAll(".tbtn").forEach(function(b) {
-      b.classList.remove("on");
-      b.setAttribute("aria-selected", "false");
-    });
-    document.querySelectorAll(".tcon").forEach(function(c) {
-      c.classList.remove("on");
-    });
-    btn.classList.add("on");
-    btn.setAttribute("aria-selected", "true");
-    currentTab = btn.getAttribute("data-t");
-    document.getElementById("tp-" + currentTab).classList.add("on");
-    renderCurrentTab();
+// ==========================================
+// RENDER & NAVIGATION LOGIC
+// ==========================================
+document.querySelectorAll(".tabs .tbtn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    document.querySelectorAll(".tabs .tbtn").forEach(function (b) { b.classList.remove("on"); });
+    this.classList.add("on");
+    state.currentTab = this.getAttribute("data-t");
+    document.querySelectorAll(".tcon").forEach(function (c) { c.classList.remove("on"); });
+    document.getElementById("tab-" + state.currentTab).classList.add("on");
+    renderApp();
   });
 });
 
-function renderCurrentTab() {
-  if (currentTab === "plan") {
-    renderPlan();
-  } else if (currentTab === "history") {
-    renderHistory();
-  } else {
-    renderProgress();
-  }
+function renderApp() {
+  if (state.currentTab === "plan") renderPlanTab();
+  if (state.currentTab === "log") renderLogTab();
+  if (state.currentTab === "po") renderPoTab();
 }
 
-/* ============================================================
-   แท็บแผน
-   ============================================================ */
-const DAY_COLORS = ["", "var(--d1)", "var(--d2)", "var(--d3)", "var(--d4)", "var(--d5)", "var(--d6)", "var(--d7)"];
-
-function renderPlan() {
-  var plan = loadPlan();
-  var items = plan[currentDay] || [];
-  var color = DAY_COLORS[currentDay];
-
-  // คำนวณสรุป
-  var totalSets = 0, totalVol = 0;
-  for (var i = 0; i < items.length; i++) {
-    var s = parseFloat(items[i].sets) || 0;
-    var r = parseFloat(items[i].reps) || 0;
-    var w = parseFloat(items[i].weight) || 0;
-    totalSets += s;
-    totalVol += s * r * w;
-  }
-
+// ------------------------------------------
+// PLAN TAB WORKFLOW
+// ------------------------------------------
+function renderPlanTab() {
+  var wrap = document.getElementById("planDaySel");
   var html = "";
+  DAYS.forEach(function (d) {
+    var list = planData[d.id] || [];
+    var active = state.currentDay === d.id ? "on" : "";
+    html += '<button class="dchip ' + active + '" data-d="' + d.id + '">' + d.name + ' <span class="cnt">' + list.length + '</span></button>';
+  });
+  wrap.innerHTML = html;
 
-  // แถวเลือกวัน
-  html += '<div class="day-sel" id="daySelector">';
-  for (var d = 1; d <= 7; d++) {
-    var cnt = (plan[d] || []).length;
-    var isActive = (d === currentDay) ? " on" : "";
-    html += '<button class="dchip' + isActive + '" data-day="' + d + '">วัน ' + d + '<span class="cnt">' + cnt + '</span></button>';
-  }
-  html += '</div>';
-
-  // สรุป
-  if (items.length > 0) {
-    html += '<div class="sbar">';
-    html += '<div class="sitem"><div class="snum" style="color:' + color + '">' + items.length + '</div><div class="slbl2">ท่า</div></div>';
-    html += '<div class="sitem"><div class="snum" style="color:' + color + '">' + totalSets + '</div><div class="slbl2">เซ็ต</div></div>';
-    html += '<div class="sitem"><div class="snum" style="color:' + color + '">' + totalVol.toLocaleString() + '</div><div class="slbl2">ปริมาณ kg</div></div>';
-    html += '</div>';
-  }
-
-  // หัววัน + ล้าง
-  html += '<div class="drow">';
-  html += '<div class="dtit" style="color:' + color + '">วันที่ ' + currentDay + '</div>';
-  if (items.length > 0) {
-    html += '<button class="clrbtn" id="clearDayBtn"><i class="fas fa-trash-can"></i> ล้าง</button>';
-  }
-  html += '</div>';
-
-  // ปุ่มเพิ่ม
-  html += '<button class="addbtn" id="addPlanBtn"><i class="fas fa-plus"></i> เพิ่มท่าออกกำลังกาย</button>';
-
-  // รายการ
-  if (items.length === 0) {
-    html += '<div class="empty"><i class="fas fa-dumbbell"></i><p>ยังไม่มีท่าในวันนี้</p></div>';
-  } else {
-    html += '<div class="elist">';
-    for (var j = 0; j < items.length; j++) {
-      html += buildCardHtml(items[j], "plan", null);
-    }
-    html += '</div>';
-  }
-
-  document.getElementById("tp-plan").innerHTML = html;
-  bindPlanEvents();
-}
-
-function bindPlanEvents() {
-  // เลือกวัน
-  var dayBtns = document.querySelectorAll("#daySelector .dchip");
-  for (var i = 0; i < dayBtns.length; i++) {
-    dayBtns[i].addEventListener("click", function() {
-      currentDay = parseInt(this.getAttribute("data-day"));
-      renderPlan();
+  wrap.querySelectorAll(".dchip").forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      state.currentDay = parseInt(this.getAttribute("data-d"));
+      renderPlanTab();
     });
-  }
-
-  // ปุ่มเพิ่ม
-  var addBtn = document.getElementById("addPlanBtn");
-  if (addBtn) {
-    addBtn.addEventListener("click", function() {
-      openModal("plan");
-    });
-  }
-
-  // ล้างวัน
-  var clearBtn = document.getElementById("clearDayBtn");
-  if (clearBtn) {
-    clearBtn.addEventListener("click", function() {
-      var plan = loadPlan();
-      plan[currentDay] = [];
-      savePlan(plan);
-      renderPlan();
-      showToast("ล้างวันที่ " + currentDay + " แล้ว", "bad");
-    });
-  }
-
-  // ผูก event การ์ด (ลบ, ทำซ้ำ, แก้ไข)
-  bindAllCardEvents("plan");
-}
-
-/* ============================================================
-   แท็บประวัติ
-   ============================================================ */
-function renderHistory() {
-  var history = loadHistory();
-  var sorted = history.slice().sort(function(a, b) {
-    return b.date.localeCompare(a.date);
   });
 
-  // กรุ๊ปตามวันที่
-  var grouped = {};
-  for (var i = 0; i < sorted.length; i++) {
-    var dt = sorted[i].date;
-    if (!grouped[dt]) grouped[dt] = [];
-    grouped[dt].push(sorted[i]);
+  var listWrap = document.getElementById("planList");
+  var currentList = planData[state.currentDay] || [];
+  if (currentList.length === 0) {
+    listWrap.innerHTML = '<div class="empty"><i class="fa-solid fa-calendar-xmark"></i><p>ไม่มีท่าฝึกซ้อมในวันนี้<br>ลองกดปุ่มด้านบนเพื่อวางแผนแคลนดาร์</p></div>';
+    return;
   }
 
-  var dates = Object.keys(grouped).sort(function(a, b) { return b.localeCompare(a); });
-  var dayNames = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
+  var listHtml = "";
+  currentList.forEach(function (item, idx) {
+    listHtml += `
+      <div class="ecard" data-idx="${idx}">
+        <div class="etop">
+          <div class="ename" contenteditable="true" spellcheck="false" data-f="name">${item.name}</div>
+          <button class="ibtn dup" onclick="duplicatePlanItem(${idx})"><i class="fa-regular fa-copy"></i></button>
+          <button class="ibtn del" onclick="deletePlanItem(${idx})"><i class="fa-solid fa-trash-can"></i></button>
+        </div>
+        <div class="estats">
+          <div class="sbox"><div class="slbl">น้ำหนัก</div><div class="sval" contenteditable="true" inputmode="decimal" data-f="weight">${item.weight}</div><span class="sunit"> kg</span></div>
+          <div class="sbox"><div class="slbl">ครั้ง</div><div class="sval" contenteditable="true" inputmode="numeric" data-f="reps">${item.reps}</div><span class="sunit"> reps</span></div>
+          <div class="sbox"><div class="slbl">เซ็ต</div><div class="sval" contenteditable="true" inputmode="numeric" data-f="sets">${item.sets}</div><span class="sunit"> sets</span></div>
+        </div>
+      </div>`;
+  });
+  listWrap.innerHTML = listHtml;
+  attachInlineEditListeners(listWrap, "plan");
+}
 
-  var html = '';
-  html += '<button class="addbtn" id="addHistoryBtn"><i class="fas fa-plus"></i> เพิ่มบันทึกวันนี้</button>';
+function duplicatePlanItem(idx) {
+  var list = planData[state.currentDay] || [];
+  if (list[idx]) {
+    list.splice(idx + 1, 0, Object.assign({}, list[idx]));
+    saveAll();
+    renderPlanTab();
+    showToast("คัดลอกรายการแล้ว", true);
+  }
+}
 
-  if (dates.length === 0) {
-    html += '<div class="empty"><i class="fas fa-clock-rotate-left"></i><p>ยังไม่มีประวัติการซ้อม</p></div>';
-  } else {
-    for (var d = 0; d < dates.length; d++) {
-      var date = dates[d];
-      var items = grouped[date];
-      var dateObj = new Date(date);
-      var formatted = dateObj.getDate() + '/' + (dateObj.getMonth() + 1) + '/' + dateObj.getFullYear() + ' (' + dayNames[dateObj.getDay()] + ')';
+function deletePlanItem(idx) {
+  var list = planData[state.currentDay] || [];
+  list.splice(idx, 1);
+  saveAll();
+  renderPlanTab();
+  showToast("ลบรายการแล้ว", true);
+}
 
-      var totalVol = 0;
-      for (var k = 0; k < items.length; k++) {
-        totalVol += (parseFloat(items[k].sets) || 0) * (parseFloat(items[k].reps) || 0) * (parseFloat(items[k].weight) || 0);
-      }
+// ------------------------------------------
+// LOG TAB WORKFLOW
+// ------------------------------------------
+document.getElementById("logDate").value = state.currentLogDate;
+document.getElementById("logDate").addEventListener("change", function () {
+  state.currentLogDate = this.value;
+  renderLogTab();
+});
 
-      html += '<div class="dhdr"><span>' + formatted + ' — ' + items.length + ' ท่า — ' + totalVol.toLocaleString() + ' kg</span><button class="ddel" data-date="' + date + '"><i class="fas fa-xmark"></i></button></div>';
-      html += '<div class="elist" style="margin-bottom:14px">';
-      for (var j = 0; j < items.length; j++) {
-        html += buildCardHtml(items[j], "history", date);
-      }
-      html += '</div>';
+document.getElementById("logClearBtn").addEventListener("click", function () {
+  if (confirm("ล้างข้อมูลการยกทั้งหมดของวันนี้ใช่ไหม?")) {
+    delete logData[state.currentLogDate];
+    saveAll();
+    renderLogTab();
+    showToast("ล้างประวัติวันนี้เรียบร้อย", true);
+  }
+});
+
+function renderLogTab() {
+  var listWrap = document.getElementById("logList");
+  var currentList = logData[state.currentLogDate];
+
+  if (!currentList) {
+    var dayOfWeek = new Date(state.currentLogDate).getDay();
+    var mappedDay = dayOfWeek === 0 ? 7 : dayOfWeek;
+    var routine = planData[mappedDay] || [];
+    if (routine.length > 0) {
+      logData[state.currentLogDate] = routine.map(function (p) { return Object.assign({}, p); });
+      saveAll();
+      currentList = logData[state.currentLogDate];
     }
   }
 
-  document.getElementById("tp-history").innerHTML = html;
-  bindHistoryEvents();
-}
-
-function bindHistoryEvents() {
-  // ปุ่มเพิ่ม
-  var addBtn = document.getElementById("addHistoryBtn");
-  if (addBtn) {
-    addBtn.addEventListener("click", function() {
-      openModal("history");
-    });
+  if (!currentList || currentList.length === 0) {
+    listWrap.innerHTML = '<div class="empty"><i class="fa-solid fa-dumbbell" style="opacity:0.1;"></i><p>ยังไม่มีบันทึกข้อมูลในวันนี้<br>แตะปุ่มเพื่อดึงข้อมูลหรือสร้างใหม่</p></div>';
+    return;
   }
 
-  // ลบทั้งวัน
-  var delBtns = document.querySelectorAll(".ddel");
-  for (var i = 0; i < delBtns.length; i++) {
-    delBtns[i].addEventListener("click", function() {
-      var date = this.getAttribute("data-date");
-      var history = loadHistory();
-      history = history.filter(function(item) { return item.date !== date; });
-      saveHistory(history);
-      renderHistory();
-      showToast("ลบประวัติวันนั้นแล้ว", "bad");
-    });
+  var listHtml = "";
+  currentList.forEach(function (item, idx) {
+    listHtml += `
+      <div class="ecard" data-idx="${idx}">
+        <div class="etop">
+          <div class="ename" contenteditable="true" spellcheck="false" data-f="name">${item.name}</div>
+          <button class="ibtn dup" onclick="duplicateLogItem(${idx})"><i class="fa-regular fa-copy"></i></button>
+          <button class="ibtn del" onclick="deleteLogItem(${idx})"><i class="fa-solid fa-trash-can"></i></button>
+        </div>
+        <div class="estats">
+          <div class="sbox"><div class="slbl">น้ำหนัก</div><div class="sval" contenteditable="true" inputmode="decimal" data-f="weight">${item.weight}</div><span class="sunit"> kg</span></div>
+          <div class="sbox"><div class="slbl">ครั้ง</div><div class="sval" contenteditable="true" inputmode="numeric" data-f="reps">${item.reps}</div><span class="sunit"> reps</span></div>
+          <div class="sbox"><div class="slbl">เซ็ต</div><div class="sval" contenteditable="true" inputmode="numeric" data-f="sets">${item.sets}</div><span class="sunit"> sets</span></div>
+        </div>
+      </div>`;
+  });
+  listWrap.innerHTML = listHtml;
+  attachInlineEditListeners(listWrap, "log");
+}
+
+function duplicateLogItem(idx) {
+  var list = logData[state.currentLogDate] || [];
+  if (list[idx]) {
+    list.splice(idx + 1, 0, Object.assign({}, list[idx]));
+    saveAll();
+    renderLogTab();
+    showToast("คัดลอกบันทึกเรียบร้อย", true);
   }
-
-  bindAllCardEvents("history");
 }
 
-/* ============================================================
-   สร้าง HTML การ์ด
-   ============================================================ */
-function buildCardHtml(item, mode, date) {
-  var dateAttr = date ? ' data-date="' + date + '"' : '';
-  return '<div class="ecard" data-id="' + item.id + '" data-mode="' + mode + '"' + dateAttr + '>' +
-    '<div class="etop">' +
-      '<span class="ename" contenteditable="true" spellcheck="false" data-field="name">' + escapeHtml(item.name) + '</span>' +
-      '<button class="sbtn dupb" title="ทำซ้ำ" data-action="dup" data-id="' + item.id + '"><i class="fas fa-copy"></i></button>' +
-      '<button class="sbtn delb" title="ลบ" data-action="del" data-id="' + item.id + '"><i class="fas fa-trash"></i></button>' +
-    '</div>' +
-    '<div class="estats">' +
-      '<div class="sbox"><div class="slbl">น้ำหนัก</div><span class="sval" contenteditable="true" spellcheck="false" data-field="weight">' + item.weight + '</span> <span class="sunit">kg</span></div>' +
-      '<div class="sbox"><div class="slbl">Reps</div><span class="sval" contenteditable="true" spellcheck="false" data-field="reps">' + item.reps + '</span> <span class="sunit">ครั้ง</span></div>' +
-      '<div class="sbox"><div class="slbl">Sets</div><span class="sval" contenteditable="true" spellcheck="false" data-field="sets">' + item.sets + '</span> <span class="sunit">เซ็ต</span></div>' +
-    '</div>' +
-  '</div>';
+function deleteLogItem(idx) {
+  var list = logData[state.currentLogDate] || [];
+  list.splice(idx, 1);
+  saveAll();
+  renderLogTab();
+  showToast("ลบบันทึกเรียบร้อย", true);
 }
 
-/* ============================================================
-   ผูก event การ์ด (ใช้ delegation)
-   ============================================================ */
-function bindAllCardEvents(mode) {
-  var container = document.getElementById("tp-" + mode);
-
-  // ลบ — ใช้ delegation
-  container.addEventListener("click", function(e) {
-    var delBtn = e.target.closest('[data-action="del"]');
-    if (delBtn) {
-      var id = delBtn.getAttribute("data-id");
-      var card = delBtn.closest(".ecard");
-      card.style.transition = "all 0.3s";
-      card.style.opacity = "0";
-      card.style.transform = "translateX(50px)";
-      setTimeout(function() {
-        if (mode === "plan") {
-          var plan = loadPlan();
-          plan[currentDay] = plan[currentDay].filter(function(x) { return x.id !== id; });
-          savePlan(plan);
-          renderPlan();
-        } else {
-          var date = card.getAttribute("data-date");
-          var history = loadHistory();
-          history = history.filter(function(x) { return !(x.id === id && x.date === date); });
-          saveHistory(history);
-          renderHistory();
-        }
-        showToast("ลบแล้ว", "bad");
-      }, 280);
-      return;
-    }
-
-    // ทำซ้ำ
-    var dupBtn = e.target.closest('[data-action="dup"]');
-    if (dupBtn) {
-      var dupId = dupBtn.getAttribute("data-id");
-      var dupCard = dupBtn.closest(".ecard");
-      if (mode === "plan") {
-        var plan = loadPlan();
-        var item = plan[currentDay].find(function(x) { return x.id === dupId; });
-        if (item) {
-          var copy = { id: genId(), name: item.name, cat: item.cat, weight: item.weight, reps: item.reps, sets: item.sets };
-          plan[currentDay].push(copy);
-          savePlan(plan);
-          renderPlan();
-          showToast("ทำซ้ำแล้ว");
-        }
-      } else {
-        var dupDate = dupCard.getAttribute("data-date");
-        var hist = loadHistory();
-        var hItem = hist.find(function(x) { return x.id === dupId && x.date === dupDate; });
-        if (hItem) {
-          var hCopy = { id: genId(), name: hItem.name, cat: hItem.cat, weight: hItem.weight, reps: hItem.reps, sets: hItem.sets, date: hItem.date };
-          hist.push(hCopy);
-          saveHistory(hist);
-          renderHistory();
-          showToast("ทำซ้ำแล้ว");
-        }
+// ------------------------------------------
+// INLINE EDITING MANAGEMENT (CORE LOGIC)
+// ------------------------------------------
+function attachInlineEditListeners(container, mode) {
+  container.addEventListener("keydown", function (e) {
+    if (e.target.classList.contains("ename") || e.target.classList.contains("sval")) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        e.target.blur();
       }
-      return;
     }
   });
 
-  // แก้ไข inline — ใช้ delegation ด้วย
-  container.addEventListener("blur", function(e) {
-    if (!e.target.classList.contains("sval") && !e.target.classList.contains("ename")) return;
+  container.addEventListener("blur", function (e) {
+    var target = e.target;
+    if (target.classList.contains("ename") || target.classList.contains("sval")) {
+      var card = target.closest(".ecard");
+      var idx = parseInt(card.getAttribute("data-idx"));
+      var field = target.getAttribute("data-f");
+      var rawVal = target.textContent.trim();
 
-    var card = e.target.closest(".ecard");
-    if (!card) return;
+      var list = mode === "plan" ? planData[state.currentDay] : logData[state.currentLogDate];
+      if (!list || !list[idx]) return;
 
-    var id = card.getAttribute("data-id");
-    var field = e.target.getAttribute("data-field");
-    var rawVal = e.target.textContent.trim();
-    var val = rawVal;
+      var item = list[idx];
+      var val = rawVal;
 
-    if (field !== "name") {
-      val = parseFloat(rawVal);
-      if (isNaN(val) || val < 0) val = 0;
-    }
-    if (!val && field === "name") val = "—";
-
-    if (mode === "plan") {
-      var plan = loadPlan();
-      var item = plan[currentDay].find(function(x) { return x.id === id; });
-      if (item) {
-        item[field] = val;
-        savePlan(plan);
-        if (field !== "name") renderPlan();
+      if (field !== "name") {
+        val = parseFloat(rawVal);
+        // ปรับปรุงจุดที่ 3: หากติดลบหรือมิใช่ตัวเลข จะล็อกกลับเป็น 0 และซิงค์เปลี่ยนตัวหนังสือบนหน้าจอทันทีเพื่อลดความสับสน
+        if (isNaN(val) || val < 0) val = 0;
       }
-    } else {
-      var date = card.getAttribute("data-date");
-      var hist = loadHistory();
-      var hItem = hist.find(function(x) { return x.id === id && x.date === date; });
-      if (hItem) {
-        hItem[field] = val;
-        saveHistory(hist);
-        if (field !== "name") renderHistory();
-      }
+      if (!val && field === "name") val = "—";
+
+      // ซิงค์อัปเดตหน้า UI ทันที
+      target.textContent = val;
+      item[field] = val;
+      saveAll();
     }
   }, true);
-
-  // Enter = ยืนยัน
-  container.addEventListener("keydown", function(e) {
-    if (e.key === "Enter" && (e.target.classList.contains("sval") || e.target.classList.contains("ename"))) {
-      e.preventDefault();
-      e.target.blur();
-    }
-  });
 }
 
-/* ============================================================
-   โมดัลเพิ่มท่า
-   ============================================================ */
+// ==========================================
+// MODAL WORKFLOW & SEARCH ENGINE
+// ==========================================
+var activeModalMode = "plan";
+var selectedCat = "All";
+var pickedExercise = null;
+
+document.getElementById("planAddBtn").addEventListener("click", function () { openModal("plan"); });
+document.getElementById("logAddBtn").addEventListener("click", function () { openModal("log"); });
+
 function openModal(mode) {
-  modalMode = mode;
+  activeModalMode = mode;
   pickedExercise = null;
-  selectedCategory = "ทั้งหมด";
-
-  document.getElementById("modalForm").classList.remove("show");
+  selectedCat = "All";
   document.getElementById("modalSearch").value = "";
+  document.getElementById("modalForm").classList.remove("show");
+  document.getElementById("exerciseModal").classList.add("show");
 
-  var dayPickEl = document.getElementById("modalDayPick");
-  var datePickEl = document.getElementById("modalDatePick");
-
-  if (mode === "plan") {
-    document.getElementById("modalTitle").textContent = "เพิ่มท่า — แผน";
-    dayPickEl.style.display = "flex";
-    datePickEl.style.display = "none";
-    buildModalDayPick();
-  } else {
-    document.getElementById("modalTitle").textContent = "เพิ่มท่า — ประวัติ";
-    dayPickEl.style.display = "none";
-    datePickEl.style.display = "block";
-    // ค่าเริ่มต้น = วันนี้
-    var today = new Date();
-    var y = today.getFullYear();
-    var m = String(today.getMonth() + 1).padStart(2, "0");
-    var d = String(today.getDate()).padStart(2, "0");
-    document.getElementById("modalDateInput").value = y + "-" + m + "-" + d;
-  }
-
-  buildModalCats();
-  buildModalList();
-  document.getElementById("modal").classList.add("show");
-  setTimeout(function() { document.getElementById("modalSearch").focus(); }, 300);
-}
-
-function closeModal() {
-  document.getElementById("modal").classList.remove("show");
-}
-
-// คลิกพื้นหลังปิด
-document.getElementById("modal").addEventListener("click", function(e) {
-  if (e.target === this) closeModal();
-});
-
-// Escape ปิด
-document.addEventListener("keydown", function(e) {
-  if (e.key === "Escape") closeModal();
-});
-
-/* เลือกวันในโมดัล (แผน) */
-function buildModalDayPick() {
-  var wrap = document.getElementById("modalDayPick");
-  modalDay = currentDay;
-  var html = '';
-  for (var d = 1; d <= 7; d++) {
-    var active = (d === modalDay) ? " on" : "";
-    html += '<button class="dpb' + active + '" data-dayval="' + d + '">' + d + '</button>';
-  }
-  wrap.innerHTML = html;
-
-  wrap.querySelectorAll(".dpb").forEach(function(btn) {
-    btn.addEventListener("click", function() {
-      modalDay = parseInt(this.getAttribute("data-dayval"));
-      wrap.querySelectorAll(".dpb").forEach(function(b) { b.classList.remove("on"); });
-      this.classList.add("on");
-    });
+  var cats = ["All", "Chest", "Back", "Legs", "Shoulders", "Arms", "Core"];
+  var catHtml = "";
+  cats.forEach(function (c) {
+    var on = c === selectedCat ? "on" : "";
+    catHtml += '<button class="cc ' + on + '" data-c="' + c + '">' + c + '</button>';
   });
-}
+  document.getElementById("modalCats").innerHTML = catHtml;
 
-/* หมวดหมู่ในโมดัล */
-function buildModalCats() {
-  var wrap = document.getElementById("modalCats");
-  var html = '';
-  for (var i = 0; i < CATEGORIES.length; i++) {
-    var active = (CATEGORIES[i] === selectedCategory) ? " on" : "";
-    html += '<button class="cc' + active + '">' + CATEGORIES[i] + '</button>';
-  }
-  wrap.innerHTML = html;
-
-  wrap.querySelectorAll(".cc").forEach(function(btn) {
-    btn.addEventListener("click", function() {
-      selectedCategory = this.textContent;
-      buildModalCats();
+  document.querySelectorAll("#modalCats .cc").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      selectedCat = this.getAttribute("data-c");
+      document.querySelectorAll("#modalCats .cc").forEach(function (b) { b.classList.remove("on"); });
+      this.classList.add("on");
       buildModalList();
     });
   });
+
+  buildModalList();
 }
 
-/* รายการท่าในโมดัล */
 function buildModalList() {
-  var query = document.getElementById("modalSearch").value.toLowerCase().trim();
+  var q = document.getElementById("modalSearch").value.toLowerCase().trim();
   var wrap = document.getElementById("modalList");
-  var list = EXERCISES.slice();
+  var html = "";
 
-  if (selectedCategory !== "ทั้งหมด") {
-    list = list.filter(function(e) { return e.cat === selectedCategory; });
-  }
-  if (query) {
-    list = list.filter(function(e) {
-      return e.name.toLowerCase().indexOf(query) !== -1 || e.cat.indexOf(query) !== -1;
+  var filtered = EXERCISE_DB.filter(function (ex) {
+    var mCat = selectedCat === "All" || ex.cat === selectedCat;
+    var mQ = ex.name.toLowerCase().indexOf(q) !== -1 || ex.cat.toLowerCase().indexOf(q) !== -1;
+    return mCat && mQ;
+  });
+
+  if (filtered.length === 0 && q.length > 0) {
+    html = `
+      <div class="epki" data-exname="${q}" data-excat="Custom" style="border:1px dashed var(--border2);">
+        <div><div class="pkn"><i class="fa-solid fa-plus-circle var(--accent)"></i> สร้างท่าฝึกใหม่: "${q}"</div><div class="pkc">หมวดหมู่กำหนดเอง</div></div>
+        <div class="pkico"><i class="fa-solid fa-dumbbell"></i></div>
+      </div>`;
+  } else {
+    filtered.forEach(function (ex) {
+      html += `
+        <div class="epki" data-exname="${ex.name}" data-excat="${ex.cat}">
+          <div><div class="pkn">${ex.name}</div><div class="pkc">${ex.cat}</div></div>
+          <div class="pkico"><i class="fa-solid ${ex.ico}"></i></div>
+        </div>`;
     });
   }
+  wrap.innerHTML = html;
+}
 
-  if (list.length === 0) {
-    wrap.innerHTML = '<div class="empty" style="padding:25px 10px"><i class="fas fa-search"></i><p>ไม่พบท่า</p></div>';
+// ปรับปรุงจุดที่ 1: เปลี่ยนมาใช้ Event Delegation ผูกไว้ที่กล่องแม่ (#modalList) สกัดปัญหาฟังก์ชันเลือกท่าเพี้ยนหรือพังเมื่อเซิร์ชคีย์เวิร์ดบ่อยครั้ง
+document.getElementById("modalList").addEventListener("click", function(e) {
+  var item = e.target.closest(".epki");
+  if (!item) return;
+  
+  pickedExercise = {
+    name: item.getAttribute("data-exname"),
+    cat: item.getAttribute("data-excat")
+  };
+  document.getElementById("modalPickedName").textContent = pickedExercise.name;
+  document.getElementById("formWeight").value = "";
+  document.getElementById("formReps").value = "";
+  document.getElementById("formSets").value = "";
+  document.getElementById("modalForm").classList.add("show");
+  setTimeout(function () { document.getElementById("formWeight").focus(); }, 100);
+});
+
+document.getElementById("modalSearch").addEventListener("input", buildModalList);
+
+document.getElementById("modalSubmitBtn").addEventListener("click", function () {
+  if (!pickedExercise) return;
+  var w = parseFloat(document.getElementById("formWeight").value) || 0;
+  var r = parseInt(document.getElementById("formReps").value) || 0;
+  var s = parseInt(document.getElementById("formSets").value) || 1;
+
+  if (w < 0 || r < 0 || s < 1) {
+    showToast("กรุณากรอกข้อมูลตัวเลขให้ถูกต้อง", false);
     return;
   }
 
-  var html = '';
-  for (var i = 0; i < list.length; i++) {
-    var ex = list[i];
-    html += '<div class="epki" data-exname="' + escapeHtml(ex.name) + '" data-excat="' + escapeHtml(ex.cat) + '">';
-    html += '<div><div class="pkn">' + escapeHtml(ex.name) + '</div><div class="pkc">' + escapeHtml(ex.cat) + '</div></div>';
-    html += '<div class="pkico"><i class="fas ' + ex.icon + '"></i></div>';
-    html += '</div>';
-  }
-  wrap.innerHTML = html;
+  var newItem = { name: pickedExercise.name, weight: w, reps: r, sets: s };
 
-  // คลิกเลือกท่า
-  wrap.querySelectorAll(".epki").forEach(function(item) {
-    item.addEventListener("click", function() {
-      pickedExercise = {
-        name: this.getAttribute("data-exname"),
-        cat: this.getAttribute("data-excat")
-      };
-      document.getElementById("modalPickedName").textContent = pickedExercise.name;
-      document.getElementById("formWeight").value = "";
-      document.getElementById("formReps").value = "";
-      document.getElementById("formSets").value = "";
-      document.getElementById("modalForm").classList.add("show");
-      setTimeout(function() { document.getElementById("formWeight").focus(); }, 100);
+  if (activeModalMode === "plan") {
+    if (!planData[state.currentDay]) planData[state.currentDay] = [];
+    planData[state.currentDay].push(newItem);
+    saveAll();
+    renderPlanTab();
+  } else {
+    if (!logData[state.currentLogDate]) logData[state.currentLogDate] = [];
+    logData[state.currentLogDate].push(newItem);
+    saveAll();
+    renderLogTab();
+  }
+
+  document.getElementById("exerciseModal").classList.remove("show");
+  showToast("เพิ่มท่าสำเร็จเรียบร้อย", true);
+});
+
+window.addEventListener("click", function (e) {
+  var m = document.getElementById("exerciseModal");
+  if (e.target === m) m.classList.remove("show");
+});
+
+// ==========================================
+// PROGRESSIVE OVERLOAD ANALYTICS (TAB PO)
+// ==========================================
+function getAllTrackedExercises() {
+  var exMap = {};
+  Object.keys(logData).forEach(function (dt) {
+    var items = logData[dt] || [];
+    items.forEach(function (it) {
+      if (it.name) exMap[it.name] = (exMap[it.name] || 0) + 1;
+    });
+  });
+  return Object.keys(exMap).sort();
+}
+
+function getExerciseHistory(exName) {
+  var history = [];
+  Object.keys(logData).sort().forEach(function (dt) {
+    var items = logData[dt] || [];
+    var matched = items.filter(function (it) { return it.name === exName; });
+    if (matched.length > 0) {
+      var totalVolume = 0;
+      var highestEst1RM = 0;
+      matched.forEach(function (it) {
+        var w = parseFloat(it.weight) || 0;
+        var r = parseInt(it.reps) || 0;
+        var s = parseInt(it.sets) || 0;
+        totalVolume += w * r * s;
+        var est1RM = w * (1 + r / 30);
+        if (est1RM > highestEst1RM) highestEst1RM = est1RM;
+      });
+      history.push({ date: dt, totalVolume: totalVolume, max1RM: highestEst1RM });
+    }
+  });
+  return history;
+}
+
+function renderPoTab() {
+  var exercises = getAllTrackedExercises();
+  var chipWrap = document.getElementById("poExcSel");
+
+  if (exercises.length === 0) {
+    chipWrap.innerHTML = "";
+    document.getElementById("poContent").innerHTML = '<div class="empty"><i class="fa-solid fa-chart-pie" style="opacity:0.15;"></i><p>ยังไม่มีสถิติสำหรับประมวลผลข้อมูล<br>กรุณากรอกข้อมูลที่แท็บ "บันทึกยก" เพื่อเริ่มระบบ</p></div>';
+    return;
+  }
+
+  if (!state.poSelectedExercise || exercises.indexOf(state.poSelectedExercise) === -1) {
+    state.poSelectedExercise = exercises[0];
+  }
+
+  var html = "";
+  exercises.forEach(function (ex) {
+    var on = ex === state.poSelectedExercise ? "on" : "";
+    var hist = getExerciseHistory(ex);
+    html += '<button class="po-chip ' + on + '" data-ex="' + ex + '">' + ex + ' <span class="poc">' + hist.length + '</span></button>';
+  });
+  chipWrap.innerHTML = html;
+
+  chipWrap.querySelectorAll(".po-chip").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      state.poSelectedExercise = this.getAttribute("data-ex");
+      renderPoTab();
+    });
+  });
+
+  var data = getExerciseHistory(state.poSelectedExercise);
+  // ตัดประวัติให้เหลือ 5 จุดหลังสุดเพื่อความสวยงามของหน้าจอกราฟ
+  if (data.length > 5) data = data.slice(-5);
+
+  var vOn = state.poMetric === "volume" ? "on" : "";
+  var mOn = state.poMetric === "max" ? "on" : "";
+
+  var contentHtml = `
+    <div class="po-toggle">
+      <button class="po-tbtn ${vOn}" data-m="volume">ปริมาณ (Volume)</button>
+      <button class="po-tbtn ${mOn}" data-m="max">ความแข็งแกร่ง (Est. 1RM)</button>
+    </div>`;
+
+  contentHtml += buildPOChartsHtml(data);
+  contentHtml += buildPOStatsHtml(data);
+
+  document.getElementById("poContent").innerHTML = contentHtml;
+
+  document.querySelectorAll(".po-toggle .po-tbtn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      state.poMetric = this.getAttribute("data-m");
+      renderPoTab();
     });
   });
 }
 
-// ค้นหา
-document.getElementById("modalSearch").addEventListener("input", function() {
-  buildModalList();
-});
-
-// กดปุ่มเพิ่ม
-document.getElementById("formSubmit").addEventListener("click", function() {
-  if (!pickedExercise) return;
-
-  var weight = parseFloat(document.getElementById("formWeight").value) || 0;
-  var reps = parseFloat(document.getElementById("formReps").value) || 0;
-  var sets = parseFloat(document.getElementById("formSets").value) || 0;
-
-  var entry = {
-    id: genId(),
-    name: pickedExercise.name,
-    cat: pickedExercise.cat,
-    weight: weight,
-    reps: reps,
-    sets: sets
-  };
-
-  if (modalMode === "plan") {
-    var plan = loadPlan();
-    if (!plan[modalDay]) plan[modalDay] = [];
-    plan[modalDay].push(entry);
-    savePlan(plan);
-    currentDay = modalDay;
-    renderPlan();
-  } else {
-    var date = document.getElementById("modalDateInput").value;
-    if (!date) {
-      showToast("กรุณาเลือกวันที่", "bad");
-      return;
-    }
-    entry.date = date;
-    var history = loadHistory();
-    history.push(entry);
-    saveHistory(history);
-    renderHistory();
+function buildPOChartsHtml(data) {
+  // ปรับปรุงจุดที่ 2: จัดการกับโครงสร้างข้อมูลเพื่อป้องกันข้อผิดพลาดกรณีเป็นข้อมูลว่างเปล่า (NaN/Empty values)
+  if (data.length === 0) {
+    return `
+      <div class="chart-wrap">
+        <div class="chart-area"><div class="empty" style="margin:auto;"><p>ยังไม่มีจุดข้อมูลเพียงพอสำหรับสร้างรายงาน</p></div></div>
+      </div>`;
   }
 
-  showToast("เพิ่ม " + pickedExercise.name + " แล้ว");
-  closeModal();
-});
-
-/* ============================================================
-   Progressive Overload
-   ============================================================ */
-function renderProgress() {
-  var history = loadHistory();
-
-  // ดึงท่าที่มีในประวัติ
-  var excMap = {};
-  for (var i = 0; i < history.length; i++) {
-    var name = history[i].name;
-    if (!excMap[name]) excMap[name] = 0;
-    excMap[name]++;
-  }
-  var excNames = Object.keys(excMap).sort();
-
-  var html = '';
-
-  if (excNames.length === 0) {
-    html += '<div class="empty"><i class="fas fa-chart-line"></i><p>ยังไม่มีข้อมูล — เพิ่มประวัติการซ้อมก่อน</p></div>';
-    document.getElementById("tp-progress").innerHTML = html;
-    return;
-  }
-
-  // ถ้ายังไม่เลือกท่า ให้เลือกท่าแรก
-  if (!poSelectedExercise || excNames.indexOf(poSelectedExercise) === -1) {
-    poSelectedExercise = excNames[0];
-  }
-
-  // เลือกท่า
-  html += '<div class="po-exc" id="poExcList">';
-  for (var j = 0; j < excNames.length; j++) {
-    var n = excNames[j];
-    var active = (n === poSelectedExercise) ? " on" : "";
-    html += '<button class="po-chip' + active + '" data-pname="' + escapeHtml(n) + '">' + escapeHtml(n) + '<span class="poc">' + excMap[n] + '</span></button>';
-  }
-  html += '</div>';
-
-  // สลับ view
-  html += '<div class="po-toggle" id="poToggle">';
-  html += '<button class="po-tbtn' + (poView === "weight" ? " on" : "") + '" data-pview="weight">น้ำหนัก</button>';
-  html += '<button class="po-tbtn' + (poView === "volume" ? " on" : "") + '" data-pview="volume">ปริมาณ</button>';
-  html += '</div>';
-
-  // กราฟ + สถิติ
-  if (poSelectedExercise) {
-    var chartData = getPOData(poSelectedExercise);
-    html += buildChartHtml(chartData);
-    html += buildPOStatsHtml(chartData);
-  }
-
-  document.getElementById("tp-progress").innerHTML = html;
-  bindProgressEvents();
-}
-
-function getPOData(name) {
-  var history = loadHistory().filter(function(x) { return x.name === name; });
-  var grouped = {};
-  for (var i = 0; i < history.length; i++) {
-    var item = history[i];
-    if (!grouped[item.date]) grouped[item.date] = { maxWeight: 0, totalVolume: 0 };
-    grouped[item.date].maxWeight = Math.max(grouped[item.date].maxWeight, parseFloat(item.weight) || 0);
-    grouped[item.date].totalVolume += (parseFloat(item.sets) || 0) * (parseFloat(item.reps) || 0) * (parseFloat(item.weight) || 0);
-  }
-  var result = [];
-  var keys = Object.keys(grouped).sort();
-  for (var k = 0; k < keys.length; k++) {
-    result.push({ date: keys[k], maxWeight: grouped[keys[k]].maxWeight, totalVolume: grouped[keys[k]].totalVolume });
-  }
-  return result;
-}
-
-function buildChartHtml(data) {
-  if (data.length === 0) return '<div class="empty"><i class="fas fa-chart-bar"></i><p>ไม่มีข้อมูล</p></div>';
-
-  var isWeight = (poView === "weight");
-  var vals = [];
-  for (var i = 0; i < data.length; i++) {
-    vals.push(isWeight ? data[i].maxWeight : data[i].totalVolume);
-  }
+  var vals = data.map(function (d) { return state.poMetric === "volume" ? d.totalVolume : d.max1RM; });
   var maxVal = Math.max.apply(null, vals);
   if (maxVal <= 0) maxVal = 1;
 
-  // Y-axis labels
-  var yLabels = [];
-  for (var y = 4; y >= 0; y--) {
-    yLabels.push(Math.round(maxVal * y / 4));
+  var gridLines = "";
+  for (var i = 0; i <= 4; i++) {
+    var topPct = (i * 25);
+    gridLines += `<div class="gl" style="top:${topPct}%"></div>`;
   }
 
-  var dayNames = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
-
-  var html = '<div class="chart-wrap"><div class="chart-area">';
-
-  // Y axis
-  html += '<div class="chart-y">';
-  for (var y2 = 0; y2 < yLabels.length; y2++) {
-    html += '<span>' + (isWeight ? yLabels[y2] + 'kg' : yLabels[y2].toLocaleString()) + '</span>';
+  var yLabels = "";
+  for (var i = 4; i >= 0; i--) {
+    var v = (maxVal * (i / 4));
+    yLabels += `<span>${v >= 1000 ? (v / 1000).toFixed(1) + "k" : v.toFixed(0)}</span>`;
   }
-  html += '</div>';
 
-  // Chart body
-  html += '<div class="chart-body">';
-  html += '<div class="chart-grid">';
-  for (var g = 1; g <= 4; g++) {
-    html += '<div class="gl" style="bottom:' + (g * 25) + '%"></div>';
-  }
-  html += '</div>';
+  var barHtml = "";
+  var xHtml = "";
 
-  // Bars
-  html += '<div class="chart-bars">';
-  var bestIdx = vals.indexOf(maxVal);
-  for (var b = 0; b < data.length; b++) {
-    var v = vals[b];
-    var pct = Math.max((v / maxVal) * 100, 1);
-    var isBest = (b === bestIdx && data.length > 1);
+  data.forEach(function (d, idx) {
+    var currentVal = state.poMetric === "volume" ? d.totalVolume : d.max1RM;
+    var hPct = (currentVal / maxVal) * 100;
+    if (hPct < 3) hPct = 3;
 
-    // % change badge
-    var pctHtml = '';
-    if (b > 0) {
-      var prev = vals[b - 1];
-      if (prev > 0) {
-        var change = ((v - prev) / prev * 100).toFixed(1);
-        if (change > 0) pctHtml = '<div class="pct-badge up"><i class="fas fa-arrow-up" style="font-size:.45rem"></i> +' + change + '%</div>';
-        else if (change < 0) pctHtml = '<div class="pct-badge dn"><i class="fas fa-arrow-down" style="font-size:.45rem"></i> ' + change + '%</div>';
-        else pctHtml = '<div class="pct-badge eq">0%</div>';
+    var badgeHtml = "";
+    if (idx > 0) {
+      var prevVal = state.poMetric === "volume" ? data[idx - 1].totalVolume : data[idx - 1].max1RM;
+      if (prevVal > 0) {
+        var diff = ((currentVal - prevVal) / prevVal) * 100;
+        if (diff > 0.1) badgeHtml = `<span class="pct-badge up">+${diff.toFixed(0)}%</span>`;
+        else if (diff < -0.1) badgeHtml = `<span class="pct-badge dn">${diff.toFixed(0)}%</span>`;
+        else badgeHtml = `<span class="pct-badge eq">0%</span>`;
       }
+    } else {
+      badgeHtml = `<span class="pct-badge eq">—</span>`;
     }
 
-    var valText = isWeight ? v + 'kg' : v.toLocaleString();
-    html += '<div class="bar-col">';
-    html += pctHtml;
-    html += '<div class="bar-v">' + valText + '</div>';
-    html += '<div class="cbar' + (isBest ? ' best' : '') + '" style="height:' + pct + '%"></div>';
-    html += '</div>';
-  }
-  html += '</div>';
+    var barClass = currentVal === maxVal && maxVal > 0 ? "cbar best" : "cbar";
+    var barColor = state.poMetric === "volume" ? "var(--accent)" : "var(--purple)";
+    if (currentVal === maxVal && maxVal > 0) barColor = "linear-gradient(180deg, var(--accent2), var(--accent))";
 
-  // X axis labels
-  html += '<div class="chart-xl">';
-  for (var x = 0; x < data.length; x++) {
-    var dt = new Date(data[x].date);
-    var label = dt.getDate() + '/' + (dt.getMonth() + 1) + ' ' + dayNames[dt.getDay()];
-    html += '<div class="xl">' + label + '</div>';
-  }
-  html += '</div>';
+    var dtObj = new Date(d.date);
+    var xLabel = (dtObj.getMonth() + 1) + "/" + dtObj.getDate();
 
-  html += '</div></div></div>';
-  return html;
+    barHtml += `
+      <div class="bar-col">
+        ${badgeHtml}
+        <span class="bar-v">${currentVal.toFixed(0)}</span>
+        <div class="${barClass}" style="height:${hPct}%; background:${barColor};"></div>
+      </div>`;
+
+    xHtml += `<div class="xl">${xLabel}</div>`;
+  });
+
+  return `
+    <div class="chart-wrap">
+      <div class="chart-area">
+        <div class="chart-y">${yLabels}</div>
+        <div class="chart-body">
+          <div class="chart-grid">${gridLines}</div>
+          <div class="chart-bars">${barHtml}</div>
+        </div>
+      </div>
+      <div class="chart-xl" style="padding-left:54px;">${xHtml}</div>
+    </div>`;
 }
 
 function buildPOStatsHtml(data) {
-  if (data.length < 2) return '';
-  var isWeight = (poView === "weight");
-  var vals = [];
-  for (var i = 0; i < data.length; i++) {
-    vals.push(isWeight ? data[i].maxWeight : data[i].totalVolume);
+  // ปรับปรุงจุดที่ 2: ดักจับกรณีอาเรย์ว่างเปล่าเพื่อป้องกันความล้มเหลวของการประมวลผล (Prevent Stats Crash)
+  if (data.length === 0) {
+    return `
+      <div class="po-stats">
+        <div class="po-si"><div class="po-sv">—</div><div class="po-sl">สถิติสูงสุด</div></div>
+        <div class="po-si"><div class="po-sv">—</div><div class="po-sl">การเปลี่ยนแปลงล่าสุด</div></div>
+      </div>`;
   }
-  var first = vals[0];
-  var last = vals[vals.length - 1];
+
+  var vals = data.map(function (d) { return state.poMetric === "volume" ? d.totalVolume : d.max1RM; });
   var best = Math.max.apply(null, vals);
-  var worst = Math.min.apply(null, vals);
-  var totalChange = (first > 0) ? ((last - first) / first * 100).toFixed(1) : "0";
-  var isUp = parseFloat(totalChange) > 0;
-  var isDn = parseFloat(totalChange) < 0;
-  var changeClass = isUp ? " up" : (isDn ? " dn" : "");
-  var changeText = (parseFloat(totalChange) > 0 ? "+" : "") + totalChange + "%";
+  
+  var latestVal = vals[vals.length - 1];
+  var changeHtml = '<div class="po-sv">—</div>';
 
-  var unit = isWeight ? "kg" : "kg";
-
-  var html = '<div class="po-stats">';
-  html += '<div class="po-si"><div class="po-sv">' + best + unit + '</div><div class="po-sl">สูงสุด</div></div>';
-  html += '<div class="po-si"><div class="po-sv">' + worst + unit + '</div><div class="po-sl">ต่ำสุด</div></div>';
-  html += '<div class="po-si"><div class="po-sv' + changeClass + '">' + changeText + '</div><div class="po-sl">เปลี่ยนจากครั้งแรก</div></div>';
-  html += '<div class="po-si"><div class="po-sv">' + data.length + '</div><div class="po-sl">เซสชัน</div></div>';
-  html += '</div>';
-  return html;
-}
-
-function bindProgressEvents() {
-  var excList = document.getElementById("poExcList");
-  if (excList) {
-    excList.querySelectorAll(".po-chip").forEach(function(btn) {
-      btn.addEventListener("click", function() {
-        poSelectedExercise = this.getAttribute("data-pname");
-        renderProgress();
-      });
-    });
+  if (vals.length > 1) {
+    var prev = vals[vals.length - 2];
+    if (prev > 0) {
+      var diff = ((latestVal - prev) / prev) * 100;
+      if (diff > 0) changeHtml = `<div class="po-sv up">+${diff.toFixed(1)}%</div>`;
+      else if (diff < 0) changeHtml = `<div class="po-sv dn">${diff.toFixed(1)}%</div>`;
+      else changeHtml = `<div class="po-sv">0.0%</div>`;
+    }
   }
 
-  var toggle = document.getElementById("poToggle");
-  if (toggle) {
-    toggle.querySelectorAll(".po-tbtn").forEach(function(btn) {
-      btn.addEventListener("click", function() {
-        poView = this.getAttribute("data-pview");
-        renderProgress();
-      });
-    });
-  }
+  var unit = state.poMetric === "volume" ? " kg" : " kg";
+
+  return `
+    <div class="po-stats">
+      <div class="po-si">
+        <div class="po-sv" style="color:var(--accent);">${best.toFixed(0)}<span style="font-size:0.7rem; font-weight:300;">${unit}</span></div>
+        <div class="po-sl">สถิติสูงสุด (All-Time Best)</div>
+      </div>
+      <div class="po-si">
+        ${changeHtml}
+        <div class="po-sl">การพัฒนาเทียบกับเซสชันก่อนหน้า</div>
+      </div>
+    </div>`;
 }
 
-/* ============================================================
-   Rest Timer
-   ============================================================ */
-var CIRCUMFERENCE = 2 * Math.PI * 56; // ~351.86
+// ==========================================
+// COGNITIVE REST TIMER MODULE
+// ==========================================
 var rtDuration = 60;
-var rtStartTime = null;
+var rtTimeLeft = 0;
 var rtIsRunning = false;
-var rtIsPaused = false;
-var rtPausedRemain = 0;
 var rtInterval = null;
 var rtPanelOpen = false;
 
-function rtUpdateDisplay() {
-  var remain;
-  if (rtIsPaused) {
-    remain = rtPausedRemain;
-  } else if (rtIsRunning) {
-    remain = Math.max(0, rtDuration - (Date.now() - rtStartTime) / 1000);
-  } else {
-    remain = rtDuration;
-  }
-
-  var minutes = Math.floor(remain / 60);
-  var seconds = Math.floor(remain % 60);
-  var timeStr = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-
-  document.getElementById("rtDisplay").textContent = timeStr;
-
-  var progress = (rtDuration > 0) ? remain / rtDuration : 1;
-  document.getElementById("rtRing").style.strokeDashoffset = CIRCUMFERENCE * (1 - progress);
-
-  // อัปเดต FAB
-  var fab = document.getElementById("rtFab");
-  if (rtIsRunning || rtIsPaused) {
-    fab.innerHTML = '<span class="rt-time-fab">' + timeStr + '</span>';
-    fab.classList.add("pulse");
-    fab.classList.remove("done");
-  }
-  if (remain <= 0 && rtIsRunning) {
-    rtFinish();
-  }
-}
-
-function rtStartTimer() {
-  if (rtIsRunning) return;
-  if (rtIsPaused) {
-    rtStartTime = Date.now() - (rtDuration - rtPausedRemain) * 1000;
-    rtIsPaused = false;
-  } else {
-    rtStartTime = Date.now();
-    if (rtDuration <= 0) rtDuration = 60;
-  }
-  rtIsRunning = true;
-
-  var btn = document.getElementById("rtStartBtn");
-  btn.innerHTML = '<i class="fas fa-pause"></i> หยุด';
-  btn.className = "rt-cbtn rt-pause";
-
-  rtInterval = setInterval(rtUpdateDisplay, 50);
-}
-
-function rtPauseTimer() {
-  if (!rtIsRunning) return;
-  rtIsPaused = true;
-  rtIsRunning = false;
-  rtPausedRemain = Math.max(0, rtDuration - (Date.now() - rtStartTime) / 1000);
-  clearInterval(rtInterval);
-
-  var btn = document.getElementById("rtStartBtn");
-  btn.innerHTML = '<i class="fas fa-play"></i> ต่อ';
-  btn.className = "rt-cbtn rt-start";
-}
-
-function rtResetTimer() {
-  rtIsRunning = false;
-  rtIsPaused = false;
-  rtPausedRemain = 0;
-  clearInterval(rtInterval);
-
-  var btn = document.getElementById("rtStartBtn");
-  btn.innerHTML = '<i class="fas fa-play"></i> เริ่ม';
-  btn.className = "rt-cbtn rt-start";
-
-  var fab = document.getElementById("rtFab");
-  fab.innerHTML = '<i class="fas fa-stopwatch"></i>';
-  fab.classList.remove("pulse", "done");
-
-  rtUpdateDisplay();
-}
-
-function rtFinish() {
-  rtIsRunning = false;
-  clearInterval(rtInterval);
-
-  var btn = document.getElementById("rtStartBtn");
-  btn.innerHTML = '<i class="fas fa-play"></i> เริ่ม';
-  btn.className = "rt-cbtn rt-start";
-
-  var fab = document.getElementById("rtFab");
-  fab.innerHTML = '<i class="fas fa-stopwatch"></i>';
-  fab.classList.remove("pulse");
-  fab.classList.add("done");
-  setTimeout(function() { fab.classList.remove("done"); }, 3000);
-
-  rtBeep();
-  if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 200]);
-}
-
-function rtBeep() {
-  try {
-    var ctx = new (window.AudioContext || window.webkitAudioContext)();
-    var delays = [0, 0.22, 0.44];
-    for (var i = 0; i < delays.length; i++) {
-      var osc = ctx.createOscillator();
-      var gain = ctx.createGain();
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.frequency.value = 880;
-      osc.type = "sine";
-      gain.gain.setValueAtTime(0.25, ctx.currentTime + delays[i]);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delays[i] + 0.18);
-      osc.start(ctx.currentTime + delays[i]);
-      osc.stop(ctx.currentTime + delays[i] + 0.18);
-    }
-  } catch(e) {}
-}
-
-function rtSetDuration(seconds) {
-  rtDuration = seconds;
-  rtResetTimer();
-}
-
-// FAB toggle
-document.getElementById("rtFab").addEventListener("click", function(e) {
+document.getElementById("rtFab").addEventListener("click", function (e) {
   e.stopPropagation();
+  var fab = document.getElementById("rtFab");
+  if (fab.classList.contains("done")) {
+    rtResetTimer();
+    return;
+  }
   rtPanelOpen = !rtPanelOpen;
-  document.getElementById("rtPanel").classList.toggle("show", rtPanelOpen);
+  if (rtPanelOpen) document.getElementById("rtPanel").classList.add("show");
+  else document.getElementById("rtPanel").classList.remove("show");
 });
 
-// คลิกข้างนอกปิด panel
-document.addEventListener("click", function(e) {
+window.addEventListener("click", function (e) {
   if (rtPanelOpen && !e.target.closest("#rtPanel") && !e.target.closest("#rtFab")) {
     rtPanelOpen = false;
     document.getElementById("rtPanel").classList.remove("show");
   }
 });
 
-// ปุ่มเริ่ม/หยุด
-document.getElementById("rtStartBtn").addEventListener("click", function() {
+document.getElementById("rtStartBtn").addEventListener("click", function () {
   if (rtIsRunning) rtPauseTimer();
   else rtStartTimer();
 });
 
-// ปุ่มรีเซ็ต
 document.getElementById("rtResetBtn").addEventListener("click", rtResetTimer);
 
-// Presets
-document.querySelectorAll("#rtPresets .rt-pb").forEach(function(btn) {
-  btn.addEventListener("click", function() {
-    document.querySelectorAll("#rtPresets .rt-pb").forEach(function(b) { b.classList.remove("on"); });
+document.querySelectorAll("#rtPresets .rt-pb").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    document.querySelectorAll("#rtPresets .rt-pb").forEach(function (b) { b.classList.remove("on"); });
     this.classList.add("on");
-    rtSetDuration(parseInt(this.getAttribute("data-s")));
+    rtDuration = parseInt(this.getAttribute("data-s"));
+    rtResetTimer();
   });
 });
 
-// Custom
-document.getElementById("rtSetCustom").addEventListener("click", function() {
+document.getElementById("rtSetCustom").addEventListener("click", function () {
   var val = parseInt(document.getElementById("rtCustom").value);
   if (val > 0) {
-    document.querySelectorAll("#rtPresets .rt-pb").forEach(function(b) { b.classList.remove("on"); });
-    rtSetDuration(val);
+    document.querySelectorAll("#rtPresets .rt-pb").forEach(function (b) { b.classList.remove("on"); });
+    rtDuration = val;
+    rtResetTimer();
     document.getElementById("rtCustom").value = "";
   }
 });
-document.getElementById("rtCustom").addEventListener("keydown", function(e) {
+
+document.getElementById("rtCustom").addEventListener("keydown", function (e) {
   if (e.key === "Enter") document.getElementById("rtSetCustom").click();
 });
 
-/* ============================================================
-   เริ่มต้น
-   ============================================================ */
-renderCurrentTab();
-rtUpdateDisplay();
+function rtUpdateUI() {
+  var sec = rtIsRunning ? rtTimeLeft : rtDuration;
+  var m = Math.floor(sec / 60);
+  var s = sec % 60;
+  var disp = (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
+  document.getElementById("rtDisplay").textContent = disp;
+
+  var circle = document.getElementById("rtCircle");
+  var circumference = 2 * Math.PI * 62;
+  circle.style.strokeDasharray = circumference;
+
+  if (!rtIsRunning) {
+    circle.style.strokeDashoffset = 0;
+    document.getElementById("rtStartBtn").textContent = "เริ่ม";
+    document.getElementById("rtStartBtn").className = "rt-cbtn start";
+    return;
+  }
+
+  var pct = rtTimeLeft / rtDuration;
+  circle.style.strokeDashoffset = circumference * (1 - pct);
+
+  var fabTime = document.getElementById("rtFabTime");
+  var icon = document.getElementById("rtIcon");
+  if (sec < 60) {
+    icon.style.display = "none";
+    fabTime.style.display = "inline";
+    fabTime.textContent = sec;
+  } else {
+    icon.style.display = "inline";
+    fabTime.style.display = "none";
+  }
+}
+
+function rtStartTimer() {
+  if (!rtIsRunning && rtTimeLeft === 0) rtTimeLeft = rtDuration;
+  rtIsRunning = true;
+  document.getElementById("rtStartBtn").textContent = "พัก";
+  document.getElementById("rtStartBtn").className = "rt-cbtn pause";
+  document.getElementById("rtFab").classList.add("pulse");
+
+  rtInterval = setInterval(function () {
+    rtTimeLeft--;
+    if (rtTimeLeft <= 0) {
+      clearInterval(rtInterval);
+      rtIsRunning = false;
+      rtTimeLeft = 0;
+      document.getElementById("rtFab").className = "rt-fab done";
+      document.getElementById("rtIcon").className = "fa-solid fa-bell";
+      document.getElementById("rtFabTime").style.display = "none";
+      document.getElementById("rtIcon").style.display = "inline";
+      document.getElementById("rtDisplay").textContent = "หมดเวลา!";
+      if (window.navigator.vibrate) window.navigator.vibrate([400, 200, 400]);
+    } else {
+      rtUpdateUI();
+    }
+  }, 1000);
+  rtUpdateUI();
+}
+
+function rtPauseTimer() {
+  rtIsRunning = false;
+  clearInterval(rtInterval);
+  document.getElementById("rtFab").classList.remove("pulse");
+  rtUpdateUI();
+}
+
+function rtResetTimer() {
+  rtIsRunning = false;
+  clearInterval(rtInterval);
+  rtTimeLeft = 0;
+  document.getElementById("rtFab").className = "rt-fab";
+  document.getElementById("rtIcon").className = "fa-solid fa-clock";
+  document.getElementById("rtFabTime").style.display = "none";
+  document.getElementById("rtIcon").style.display = "inline";
+  document.getElementById("rtFab").classList.remove("pulse");
+  rtUpdateUI();
+}
+
+// INTIALIZING APPLICATION
+renderApp();
 </script>
 </body>
 </html>
